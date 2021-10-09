@@ -1,0 +1,23 @@
+version: "2"
+services:
+  webSocketServer:
+    image: "node:14.18.0-alpine3.14"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./WebSocketServer:/home/node/app
+    # expose:
+    #   - "8081"
+    ports:
+      # - "9898:9898"
+      - "80:3000"
+    # command: "npm start"
+    # command: "npm install express"    
+    # command: "node websocket-server.js"
+    command: "node wsserver.js"
+    
+    # docker run -it --rm --name my-running-script -v /home/diego/CarrrosWiFiTest/websocket:/usr/src/app -w /usr/src/app node:14.18.0 node script.js
+    # docker run -it --rm --name my-running-script -v /home/diego/CarrrosWiFiTest/websocket:/usr/src/app -w /usr/src/app node:14.18.0 npm init
+    # docker run -it --rm --name my-running-script -v /home/diego/CarrrosWiFiTest/websocket:/usr/src/app -w /usr/src/app node:14.18.0 npm isntall

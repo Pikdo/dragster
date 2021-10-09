@@ -4,7 +4,7 @@ const express = require('express');
 const parse = require('url').parse;
 const app = express();
 
-const serverPort = 80;
+const serverPort = process.env.PORT || 3000;
 
 const wssCars = new ws.Server({ noServer: true });
 const wssDrivers = new ws.Server({ noServer: true });
@@ -119,6 +119,11 @@ server.on('upgrade', function upgrade(request, socket, head) {
 
 
 app.use('/img', express.static(path.join(__dirname, 'public/images')));
+app.use('/', express.static(path.join(__dirname, 'public')));
+
+// app.get('/favico.ico', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public/images')"/public/images/favicon.ico");
+// });
 
 app.get("/:carid/:carside", (req, res) => {
     res.sendFile(__dirname + "/pages/client_" + req.params.carid + "_" + req.params.carside + ".html");

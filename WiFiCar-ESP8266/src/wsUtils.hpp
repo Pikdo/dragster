@@ -64,7 +64,7 @@ void webSocketInit() {
 	webSocket.onEvent(webSocketEvent);
 
 	// use HTTP Basic Authorization this is optional remove if not needed
-	webSocket.setAuthorization("PasswordDiego");
+	//webSocket.setAuthorization("PasswordDiego");
 	//webSocket.setAuthorization("userDiego", "PasswordDiego");
 
 	// try ever 5000 again if connection has failed

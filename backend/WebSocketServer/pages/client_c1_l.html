@@ -7,7 +7,7 @@
 
 <body>
     <div>
-        Driver 1 Right tire
+        Driver 1 Left tire
     </div>
 
     <img onmousedown="forewardCommand('D')" onmouseup="forewardCommand('U')" src="/img/foreward.png" width="100" height="100">
@@ -21,14 +21,11 @@
     </div>
 </body>
 <script>
-    var authToken = 'R3YKZFKBVi';
-
-    document.cookie = 'X-Authorization=' + authToken + '; path=/';
-
     // const ws = new WebSocket('ws://localhost:9898/');
-    // const ws = new WebSocket('ws://192.168.1.69:80/driver/1/r');
-    const ws = new WebSocket('ws://username:password@192.168.1.69:80/driver/1/r');
-    // const ws = new WebSocket('ws://localhost:80');
+    // const ws = new WebSocket('ws://192.168.1.69:80/driver/1/l');
+    var ws = new WebSocket('wss://remotecarcontrol.herokuapp.com/driver/1/l');
+
+
 
     ws.onopen = function() {
         console.log('WebSocket Client Connected');
@@ -42,16 +39,37 @@
     function forewardCommand(event) {
         // console.log("forewardMouseDown");
         if (event === 'D' || event === 'U') {
-            ws.send('{RF' + event + '}');
+            ws.send('{LF' + event + '}');
         }
     }
 
     function backwardCommand(event) {
         // console.log("forewardMouseDown");
         if (event === 'D' || event === 'U') {
-            ws.send('{RB' + event + '}');
+            ws.send('{LB' + event + '}');
         }
     }
+
+    // function test() {
+    //     console.log("test");
+    //     //ws.send('{LFD}');
+    //     alert('teste nada...');
+    // }
+
+    // function forewardMouseUp() {
+    //     console.log("forewardMouseDown");
+    //     ws.send('{LFU}');
+    // }
+
+    // function backwardMouseDown() {
+    //     //console.log("backwardMouseDown");
+    //     ws.send('{LBD}');
+    // }
+
+    // function backwardMouseUp() {
+    //     //console.log("backwardMouseDown");
+    //     ws.send('{LBU}');
+    // }
 </script>
 
 </html>

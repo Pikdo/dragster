@@ -22,7 +22,8 @@
 </body>
 <script>
     // const ws = new WebSocket('ws://localhost:9898/');
-    const ws = new WebSocket('ws://192.168.1.69:80/driver/2/l');
+    //const ws = new WebSocket('ws://192.168.1.69:80/driver/2/l');
+    const ws = new WebSocket('wss://remotecarcontrol.herokuapp.com/driver/2/l');
 
     ws.onopen = function() {
         console.log('WebSocket Client Connected');
