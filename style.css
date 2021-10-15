@@ -1,14 +1,15 @@
+/**
+*  DRAGSTER CSS
+*  @autor: pikdo
+*  @date: 14/10/2021  
+*/
+
 :root {
     /* Colores */
-    --bitcoin-orange: #f7931a;
-    --soft-orange: #ffe9d5;
-    --secondary-blue: #1a9af7;
-    --soft-blue: #e7f5ff;
-    --warm-black: #201e1c;
-    --black: #282623;
-    --grey: #bababa;
-    --off-white: #faf8f7;
-    --just-white: #fff;
+    --principal: #df3314;
+    --secundary: #1581c0;
+    --black: #333;
+    --white: #fff;
 }
 
 * {
@@ -19,11 +20,47 @@
 
 html {
     font-size: 62.5%; /* para usar medidas rem*/
-    font-family: "DM Sans", sans-serif;
+    font-family: "Roboto", sans-serif;
     scroll-behavior: smooth; /*Para crear una smooth scrolling*/
 }
 
+header {
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-width: 320px;
+    height: 50px;
+}
+.header-container {
+    min-width: 320px;
+    max-width: 900px;
+    height: 70px;
+    line-height: 70px;
+    background-color: var(--black);
+}
+.header-container p {
+    font-size: 5rem;
+    font-weight: bold;
+}
+.header-container__title1 {
+    color: var(--principal);
+    margin: 0 10px 0 30px;
+    display: inline;
+}
+.header-container__title2 {
+    color: var(--secundary);
+    display: inline;
+    margin: 0 10px;
+}
+
+.main-container {
+    background-image: url("assets/img/home.png") no-repeat;
+    min-width: 320px;
+    height: 500px;
+}
+
 h1 {
-    font-size: 2rem;
-    color: var(--secondary-blue);
+    font-size: 3rem;
+    color: var(--white);
 }
