@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Remote Rally</title>
+</head>
+
+<body>
+    <div>
+        Driver 1 Left tire
+    </div>
+
+    <img onmousedown="forewardCommand('D')" onmouseup="forewardCommand('U')" src="/img/foreward.png" width="100" height="100">
+    <img onmousedown="backwardCommand('D')" onmouseup="backwardCommand('U')" src="/img/backward.png" width="100" height="100">
+    <div> </div>
+    Forewarad
+    <div ontouchstart="forewardCommand('D')" ontouchend="forewardCommand('U')" style="background-color: green; height: 100px; width: 100px;">
+    </div>
+    backwarad
+    <div ontouchstart="backwardCommand('D')" ontouchend="backwardCommand('U')" style="background-color: blue; height: 100px; width: 100px;">
+    </div>
+</body>
+<script>
+    // const ws = new WebSocket('ws://localhost:9898/');
+    // const ws = new WebSocket('ws://192.168.1.69:80/driver/1/l');
+    var ws = new WebSocket('wss://remotecarcontrol.herokuapp.com/driver/1/l');
+
+
+
+    ws.onopen = function() {
+        console.log('WebSocket Client Connected');
+        //ws.send('Hi this is web client.');
+    };
+
+    ws.onmessage = function(e) {
+        console.log("Received: '" + e.data + "'");
+    };
+
+    function forewardCommand(event) {
+        // console.log("forewardMouseDown");
+        if (event === 'D' || event === 'U') {
+            ws.send('{LF' + event + '}');
+        }
+    }
+
+    function backwardCommand(event) {
+        // console.log("forewardMouseDown");
+        if (event === 'D' || event === 'U') {
+            ws.send('{LB' + event + '}');
+        }
+    }
+
+    // function test() {
+    //     console.log("test");
+    //     //ws.send('{LFD}');
+    //     alert('teste nada...');
+    // }
+
+    // function forewardMouseUp() {
+    //     console.log("forewardMouseDown");
+    //     ws.send('{LFU}');
+    // }
+
+    // function backwardMouseDown() {
+    //     //console.log("backwardMouseDown");
+    //     ws.send('{LBD}');
+    // }
+
+    // function backwardMouseUp() {
+    //     //console.log("backwardMouseDown");
+    //     ws.send('{LBU}');
+    // }
+</script>
+
+</html>

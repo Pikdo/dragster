@@ -1,0 +1,12 @@
+develop:
+docker-compose up -d
+docker-compose down
+
+Build Image
+docker build -t remotecarcontrol .
+docker run -p 80:3000 -d --name carcontrol remotecarcontrol
+docker rm -f carcontrol
+
+deploy to heroku
+heroku container:push web -a remotecarcontrol
+heroku container:release web -a remotecarcontrol
