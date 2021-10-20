@@ -10,3 +10,11 @@ docker rm -f carcontrol
 deploy to heroku
 heroku container:push web -a remotecarcontrol
 heroku container:release web -a remotecarcontrol
+
+URL:
+https://remotecarcontrol.herokuapp.com/
+https://remotecarcontrol.herokuapp.com/admin
+https://remotecarcontrol.herokuapp.com/c1/l
+https://remotecarcontrol.herokuapp.com/c1/r
+https://remotecarcontrol.herokuapp.com/c2/l
+https://remotecarcontrol.herokuapp.com/c2/r
