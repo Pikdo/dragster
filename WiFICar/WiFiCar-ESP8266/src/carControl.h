@@ -5,7 +5,10 @@
 
 void carControlInit();
 void processCommand(uint8_t * commantStr, size_t length);
-void processEvent(int gpio1, int gpio2, char direction, char event);
+void processTireEvent(char tire, char direction, char event);
+void processGeneralEvent(char command, char event);
+void processTurbo(char event);
+void processStop(char event);
 
 
 #endif
