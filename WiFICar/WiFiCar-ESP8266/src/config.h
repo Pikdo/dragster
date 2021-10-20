@@ -7,8 +7,8 @@
   const char* password = "20KaijD20";
   const char* hostname = "WiFiCar";
   
-  const char* wsServerName = "192.168.1.69";
-  //const char* wsServerName = "remotecarcontrol.herokuapp.com";  
+  //const char* wsServerName = "192.168.1.69";
+  const char* wsServerName = "remotecarcontrol.herokuapp.com";  
   const int wsServerPort = 80;
   const char* wsServerPath = "/car";
 
