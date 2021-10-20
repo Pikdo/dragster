@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Remote Rally</title>
+</head>
+
+<body>
+    <div>
+        Race controller
+    </div>
+
+    Start
+    <div ontouchstart="startCommand()" onmousedown="startCommand()" style="background-color: green; height: 100px; width: 100px;">
+    </div>
+    Stop
+    <div ontouchstart="stopCommand()" onmousedown="stopCommand()" style="background-color: rgb(221, 36, 30); height: 100px; width: 100px;">
+    </div>
+    <div></div>
+    Received message
+    <!-- <div style="background-color: rgb(221, 36, 30); height: 100px; width: 100px;"> -->
+    <div id="ShowReceivedMessage">
+
+    </div>
+</body>
+<script>
+    const serverName = 'ws://192.168.1.69';
+    //const serverName = 'wss://remotecarcontrol.herokuapp.com';
+    const ws = new WebSocket(serverName + '/racecontroller');
+
+    const divMessage = document.getElementById('ShowReceivedMessage');
+
+    ws.onopen = function() {
+        //ws.pingInterval = setInterval(() => ws.ping(), 1000 * 45);
+        //console.log(ws);
+    };
+
+    ws.onclose = function() {
+        //clearInterval(ws.pingInterval);
+    };
+
+    // ws.onping = function() {
+    //     //clearInterval(ws.pingInterval);
+    //     console.log('ping...');
+    // };
+
+    ws.onmessage = function(e) {
+        divMessage.innerHTML = e.data;
+    };
+
+    function startCommand() {
+        ws.send('{startRace}');
+    }
+
+    function stopCommand() {
+        ws.send('{stopRace}');
+    }
+</script>
+
+</html>

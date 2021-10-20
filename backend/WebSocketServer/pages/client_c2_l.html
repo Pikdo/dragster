@@ -9,29 +9,44 @@
     <div>
         Driver 2 Left tire
     </div>
-
-    <img onmousedown="forewardCommand('D')" onmouseup="forewardCommand('U')" src="/img/foreward.png" width="100" height="100">
-    <img onmousedown="backwardCommand('D')" onmouseup="backwardCommand('U')" src="/img/backward.png" width="100" height="100">
     <div> </div>
-    Forewarad
-    <div ontouchstart="forewardCommand('D')" ontouchend="forewardCommand('U')" style="background-color: green; height: 100px; width: 100px;">
+
+    Turbo
+    <div ontouchstart="turboCommand()" style="background-color: rgb(221, 36, 30); height: 100px; width: 100px;">
     </div>
-    backwarad
-    <div ontouchstart="backwardCommand('D')" ontouchend="backwardCommand('U')" style="background-color: blue; height: 100px; width: 100px;">
+    Foreward
+    <div ontouchstart="forewardCommand('D')" ontouchend="forewardCommand('U')" onmousedown="forewardCommand('D')" onmouseup="forewardCommand('U')" style="background-color: green; height: 100px; width: 100px;">
     </div>
+    backward
+    <div ontouchstart="backwardCommand('D')" ontouchend="backwardCommand('U')" onmousedown="backwardCommand('D')" onmouseup="backwardCommand('U')" style="background-color: blue; height: 100px; width: 100px;">
+    </div>
+
+    <div></div>
+    Received message
+    <!-- <div style="background-color: rgb(221, 36, 30); height: 100px; width: 100px;"> -->
+    <div id="ShowReceivedMessage">
 </body>
 <script>
-    // const ws = new WebSocket('ws://localhost:9898/');
-    //const ws = new WebSocket('ws://192.168.1.69:80/driver/2/l');
-    const ws = new WebSocket('wss://remotecarcontrol.herokuapp.com/driver/2/l');
+    const serverName = 'ws://192.168.1.69';
+    //const serverName = 'wss://remotecarcontrol.herokuapp.com';
+    const ws = new WebSocket(serverName + '/driver/2/l');
+
+    const divMessage = document.getElementById('ShowReceivedMessage');
 
     ws.onopen = function() {
-        console.log('WebSocket Client Connected');
+        //console.log('WebSocket Client Connected');
         //ws.send('Hi this is web client.');
+        //ws.pingInterval = setInterval(() => ws.ping(), 1000 * 45);
+    };
+
+    ws.onclose = function() {
+        //console.log('WebSocket Client Connected');
+        //ws.send('Hi this is web client.');
+        //clearInterval(ws.pingInterval);
     };
 
     ws.onmessage = function(e) {
-        console.log("Received: '" + e.data + "'");
+        divMessage.innerHTML = e.data;
     };
 
     function forewardCommand(event) {
@@ -46,6 +61,10 @@
         if (event === 'D' || event === 'U') {
             ws.send('{LB' + event + '}');
         }
+    }
+
+    function turboCommand() {
+        ws.send('{GTD}');
     }
 </script>
 
