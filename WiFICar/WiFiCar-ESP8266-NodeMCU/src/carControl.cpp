@@ -76,12 +76,14 @@ void processTireEvent(char tire, char direction, char event){
       case 'F':      
 	        digitalWrite(gpio1, HIGH);
 	        digitalWrite(gpio2, LOW);
-          analogWrite(gpio_speed, NORMAL_SPEED);
+          // analogWrite(gpio_speed, NORMAL_SPEED);
+          digitalWrite(gpio_speed, HIGH);
         break;
       case 'B':
 	        digitalWrite(gpio1, LOW);
 	        digitalWrite(gpio2, HIGH);
-          analogWrite(gpio_speed, NORMAL_SPEED);
+          // analogWrite(gpio_speed, NORMAL_SPEED);
+          digitalWrite(gpio_speed, HIGH);
         break;
       }
   }
@@ -108,8 +110,10 @@ void processTurbo(char event){
         digitalWrite(GPIO_RIGHT_2, LOW);
         digitalWrite(GPIO_LEFT_1, HIGH);
         digitalWrite(GPIO_LEFT_2, LOW);
-        analogWrite(GPIO_RIGHT_SPEED, TURBO_SPEED);
-        analogWrite(GPIO_LEFT_SPEED, TURBO_SPEED);
+        // analogWrite(GPIO_RIGHT_SPEED, TURBO_SPEED);
+        // analogWrite(GPIO_LEFT_SPEED, TURBO_SPEED);
+        digitalWrite(GPIO_RIGHT_SPEED, HIGH);
+        digitalWrite(GPIO_LEFT_SPEED, HIGH);
       break;
     default:
         currentSatatus = NORMAL;

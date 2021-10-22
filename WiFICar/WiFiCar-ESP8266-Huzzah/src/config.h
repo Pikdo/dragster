@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
   #define CONFIG_H
-  const char* carNumber = "1";
-  //const char* carNumber = "2";
+  //const char* carNumber = "1";
+  const char* carNumber = "2";
 
   const char* ssid     = "KAIJD";
   const char* password = "20KaijD20";

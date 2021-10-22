@@ -1,14 +1,20 @@
 #include <ESP8266WiFi.h>
 
+
 bool wifiConnect(const char* ssid , const char* password)
 {
 	int tries = 0;
 	WiFi.begin(ssid, password);
+  bool ledStatus = false;	
 	///if(useStaticIP) WiFi.config(ip, gateway, subnet);
 	while (WiFi.status() != WL_CONNECTED && tries < MAX_CONNECTION_TRIES) 
 	{ 
+		if(tries%10==0){
+		  digitalWrite(LED_BUILTIN_AUX, ledStatus);
+		  ledStatus= !ledStatus;
+		}
 #ifdef DEBUG
-		USE_SERIAL.print(" . ");
+		Serial.print(" . ");
 #endif
 		tries++;
 		delay(100);

@@ -7,6 +7,7 @@
 #include "carControl.h"
 
 void setup() {
+	pinMode(LED_BUILTIN_AUX, OUTPUT);
 	carControlInit();
 	
 #ifdef DEBUG
@@ -19,7 +20,10 @@ void setup() {
 	Serial.println();
 #endif
 
+  bool ledStatus = false;	
 	for(uint8_t t = 4; t > 0; t--) {
+		digitalWrite(LED_BUILTIN_AUX, ledStatus);
+		ledStatus= !ledStatus;
 #ifdef DEBUG
 		Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
 		Serial.flush();
@@ -29,6 +33,8 @@ void setup() {
 
   ConnectWiFi_STA();
 	webSocketInit();
+
+  digitalWrite(LED_BUILTIN_AUX, HIGH); // Turn OFF led
 }
 
 void loop() {

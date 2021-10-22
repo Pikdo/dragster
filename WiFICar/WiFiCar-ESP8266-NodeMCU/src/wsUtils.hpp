@@ -4,21 +4,32 @@
 
 WebSocketsClient webSocket;
 
+void ledIndicator(uint8_t beepCount){
+	for (int i = 0; i<beepCount;i++){
+    digitalWrite(LED_BUILTIN_AUX, LOW);
+	  delay(250);
+    digitalWrite(LED_BUILTIN_AUX, HIGH);
+	  delay(250);
+	}
+}
+
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 
 	switch(type) {
 		case WStype_DISCONNECTED:
+		  ledIndicator(3);
 #ifdef DEBUG
 			Serial.printf("[WSc] Disconnected!\n");
 #endif
 			break;
-		case WStype_CONNECTED: {
+		case WStype_CONNECTED: 
+		  ledIndicator(2);
 #ifdef DEBUG
 			Serial.printf("[WSc] Connected to url: %s\n", payload);
 #endif
 			// send message to server when Connected
 			webSocket.sendTXT("Connected");
-		}
+		
 			break;
 		case WStype_TEXT:
 #ifdef DEBUG

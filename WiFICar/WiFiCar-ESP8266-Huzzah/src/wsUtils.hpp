@@ -4,32 +4,42 @@
 
 WebSocketsClient webSocket;
 
-void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
+void ledIndicator(uint8_t beepCount){
+	for (int i = 0; i<beepCount;i++){
+    digitalWrite(LED_BUILTIN, LOW);
+	  delay(250);
+    digitalWrite(LED_BUILTIN, HIGH);
+	  delay(250);
+	}
+}
 
+
+void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 	switch(type) {
 		case WStype_DISCONNECTED:
+		  ledIndicator(3);
 #ifdef DEBUG
-			USE_SERIAL.printf("[WSc] Disconnected!\n");
+			Serial.printf("[WSc] Disconnected!\n");
 #endif
 			break;
-		case WStype_CONNECTED: {
+		case WStype_CONNECTED: 
+			ledIndicator(2);
 #ifdef DEBUG
-			USE_SERIAL.printf("[WSc] Connected to url: %s\n", payload);
+			Serial.printf("[WSc] Connected to url: %s\n", payload);
 #endif
 			// send message to server when Connected
-			webSocket.sendTXT("Connected");
-		}
+			webSocket.sendTXT("Connected");		
 			break;
 		case WStype_TEXT:
 #ifdef DEBUG
-			USE_SERIAL.printf("[WSc] get text: %s\n", payload);
+			Serial.printf("[WSc] get text: %s\n", payload);
 #endif
 	    processCommand(payload, length);
 			// send message to server
 			// webSocket.sendTXT("message here");
 			break;
 		case WStype_BIN:
-			//USE_SERIAL.printf("[WSc] get binary length: %u\n", length);
+			//Serial.printf("[WSc] get binary length: %u\n", length);
 			//hexdump(payload, length);
 
 			// send data to server
@@ -37,11 +47,11 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 			break;
 		case WStype_PING:
 				// pong will be send automatically
-				//USE_SERIAL.printf("[WSc] get ping\n");
+				//Serial.printf("[WSc] get ping\n");
 				break;
 		case WStype_PONG:
 				// answer to a ping we send
-				//USE_SERIAL.printf("[WSc] get pong\n");
+				//Serial.printf("[WSc] get pong\n");
 				break;
 
 		case WStype_FRAGMENT_TEXT_START:
