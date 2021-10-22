@@ -1,7 +1,7 @@
 #ifndef DEFINITIONS_H
   #define DEFINITIONS_H
 
-  #define DEBUG
+  //#define DEBUG
   
   #define TURBO_SPEED 200
   #define NORMAL_SPEED 150
