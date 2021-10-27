@@ -62,10 +62,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 		case WStype_ERROR:
 				break;
     }
-
 }
-
-
 
 void webSocketInit() {
   // server address, port and URL

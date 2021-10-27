@@ -1,10 +1,11 @@
 #ifndef DEFINITIONS_H
   #define DEFINITIONS_H
 
-  //#define DEBUG
+  #define DEBUG
   
   //#define TURBO_SPEED 1000
   //#define NORMAL_SPEED 700
+  #define MAX_TIME_COMMAND 3000 // milisegundos
 
   #define MAX_CONNECTION_TRIES 200
 

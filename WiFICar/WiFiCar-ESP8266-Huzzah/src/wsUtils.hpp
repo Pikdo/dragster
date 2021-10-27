@@ -13,7 +13,6 @@ void ledIndicator(uint8_t beepCount){
 	}
 }
 
-
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 	switch(type) {
 		case WStype_DISCONNECTED:
@@ -63,8 +62,6 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
     }
 
 }
-
-
 
 void webSocketInit() {
   // server address, port and URL

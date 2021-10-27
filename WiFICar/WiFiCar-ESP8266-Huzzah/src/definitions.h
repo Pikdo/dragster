@@ -5,6 +5,7 @@
   
   //#define TURBO_SPEED 200
   //#define NORMAL_SPEED 150
+  #define MAX_TIME_COMMAND 3000 // milisegundos
 
   #define MAX_CONNECTION_TRIES 200
 
