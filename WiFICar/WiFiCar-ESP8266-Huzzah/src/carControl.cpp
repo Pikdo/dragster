@@ -20,7 +20,6 @@ unsigned long finishTime;
 //{GTF:3000} General Timer Foreward Avance durante un determinado tiempo en milisegundos
 //{GTB:3000} General Timer Backward Retroceso durante un determinado tiempo en milisegundos
 	
-
 //Deprecated:
 //{GUD} General Turbo Down Inicia el avance en ambas llantas
 //{GUU} General Turbo Up Finaliza el avance en ambas llantas
@@ -40,7 +39,10 @@ void setCurrentSatatus(Mode_Status newStatus){
   setCurrentSatatus(newStatus, 0);
 }
 
-void processStop(char event){     
+void processStop(char event){
+  #ifdef DEBUG
+		Serial.println("processStop");
+  #endif
   setCurrentSatatus(NORMAL);
   digitalWrite(GPIO_RIGHT_SPEED, LOW);
   digitalWrite(GPIO_LEFT_SPEED, LOW);
@@ -198,25 +200,20 @@ void carControlInit() {
 }
 
 void processCommand(uint8_t * commantStr, size_t length){
-  #ifdef DEBUG
-		Serial.println("processCommand");
-  #endif
+  // #ifdef DEBUG
+	// 	Serial.println("processCommand");
+  // #endif
 	
   if (length<5){ // menos de 5 caracteres no es un commando válido
     return;
   }
 
   unsigned int timer = 0;
-  if (length>6){ // ejemplo: {GBT:3000}
-    //uint8_t i = 1
-    for(uint8_t i = 5; length-2; i++){
+  if (length>6){ // ejemplo: {GTF:3000}
+    for(uint8_t i = 5; i <= length-2; i++){ 
       timer *= 10; 
       timer += (commantStr[i] - '0');
     }
-    #ifdef DEBUG
-		  Serial.print("timer: ");
-		  Serial.println(timer);
-    #endif
   }
 	
   switch (commantStr[1]) {

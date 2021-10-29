@@ -12,19 +12,32 @@
     <div> </div>
 
     Turbo
-    <div ontouchstart="turboCommand()" style="background-color: rgb(221, 36, 30); height: 100px; width: 100px;">
+    <div ontouchstart="turboCommand()" onmousedown="turboCommand()" style="background-color: rgb(221, 36, 30); height: 100px; width: 100px;">
     </div>
-    Foreward
+    <!-- Foreward
     <div ontouchstart="forewardCommand('D')" ontouchend="forewardCommand('U')" onmousedown="forewardCommand('D')" onmouseup="forewardCommand('U')" style="background-color: green; height: 100px; width: 100px;">
     </div>
     backward
     <div ontouchstart="backwardCommand('D')" ontouchend="backwardCommand('U')" onmousedown="backwardCommand('D')" onmouseup="backwardCommand('U')" style="background-color: blue; height: 100px; width: 100px;">
+    </div> -->
+    Foreward
+    <div ontouchstart="forewardTimedCommand()" onmousedown="forewardTimedCommand()" style="background-color: green; height: 100px; width: 100px;">
+    </div>
+    backward
+    <div ontouchstart="backwardTimedCommand()" onmousedown="backwardTimedCommand()" style="background-color: blue; height: 100px; width: 100px;">
     </div>
 
     <div></div>
     Received message
     <!-- <div style="background-color: rgb(221, 36, 30); height: 100px; width: 100px;"> -->
     <div id="ShowReceivedMessage">
+    </div>
+
+    <div></div>
+    Aceleration Value
+    <!-- <div style="background-color: rgb(221, 36, 30); height: 100px; width: 100px;"> -->
+    <div id="ShowAcelerationValue">
+    </div>
 </body>
 <script>
     //const serverName = 'ws://192.168.1.69';
@@ -32,6 +45,9 @@
     const ws = new WebSocket(serverName + '/driver/2/l');
 
     const divMessage = document.getElementById('ShowReceivedMessage');
+    const divValue = document.getElementById('ShowAcelerationValue');
+    let acelerationValue = 0;
+    let timeoutControl;
 
     ws.onopen = function() {
         //console.log('WebSocket Client Connected');
@@ -47,24 +63,50 @@
 
     ws.onmessage = function(e) {
         divMessage.innerHTML = e.data;
+        if (e.data == "...GO...") {
+            generateRamdomValue();
+        } else if (e.data == "La carrera ha terminado....") {
+            clearTimeout(timeoutControl);
+            acelerationValue = 0;
+            divValue.innerHTML = "";
+        }
     };
 
-    function forewardCommand(event) {
+    // function forewardCommand(event) {
+    //     // console.log("forewardMouseDown");
+    //     if (event === 'D' || event === 'U') {
+    //         ws.send('{LF' + event + '}');
+    //     }
+    // }
+
+    // function backwardCommand(event) {
+    //     // console.log("forewardMouseDown");
+    //     if (event === 'D' || event === 'U') {
+    //         ws.send('{LB' + event + '}');
+    //     }
+    // }
+
+    function forewardTimedCommand() {
         // console.log("forewardMouseDown");
-        if (event === 'D' || event === 'U') {
-            ws.send('{LF' + event + '}');
-        }
+        ws.send('{GTF:' + acelerationValue + '}');
+        divMessage.innerHTML = "Foreward aceleration: " + acelerationValue;
     }
 
-    function backwardCommand(event) {
+    function backwardTimedCommand(event) {
         // console.log("forewardMouseDown");
-        if (event === 'D' || event === 'U') {
-            ws.send('{LB' + event + '}');
-        }
+        ws.send('{GTB:' + acelerationValue + '}');
+        divMessage.innerHTML = "Backward aceleration: " + acelerationValue;
     }
 
     function turboCommand() {
-        ws.send('{GTD}');
+        divMessage.innerHTML = "... Turbo ... ";
+        ws.send('{GUD}');
+    }
+
+    function generateRamdomValue() {
+        acelerationValue = Math.round(Math.random() * 10);
+        divValue.innerHTML = acelerationValue;
+        timeoutControl = setTimeout(generateRamdomValue, 100);
     }
 </script>
 
