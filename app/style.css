@@ -25,7 +25,7 @@ html {
 }
 
 header {
-    position: absolute;
+    position: relative;
     flex-direction: column;
     justify-content: center;
     width: 100%;
@@ -33,7 +33,7 @@ header {
     height: 50px;
 }
 .header-container {
-    min-width: 320px;
+    min-width: 600px;
     max-width: 900px;
     height: 70px;
     line-height: 70px;
@@ -54,14 +54,10 @@ header {
     margin: 0 10px;
 }
 
-main {
-    position: absolute;
-    background-image: url("assets/img/home.png") no-repeat;
-}
-
 .main-container {
-    min-width: 320px;
-    height: 500px;
+    background-image: url("assets/img/home.png") no-repeat;
+    min-width: 640px;
+    height: 320px;
 }
 
 h1 {
