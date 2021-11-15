@@ -1,5 +1,5 @@
 # comentario
 #*.jpg
 #*.png
-/WiFiCar
-/backend
+#/WiFiCar # esto también afecta a los otros desarrolladores
+#/backend # esto también afecta a los otros desarrolladores
