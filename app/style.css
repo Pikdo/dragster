@@ -26,15 +26,15 @@ html {
 
 header {
     position: relative;
+    z-index: 1;
     flex-direction: column;
     justify-content: center;
     width: 100%;
     min-width: 320px;
-    height: 50px;
+    height: 70px;
 }
 .header-container {
-    min-width: 600px;
-    max-width: 900px;
+    min-width: 900px;
     height: 70px;
     line-height: 70px;
     background-color: var(--black);
@@ -54,10 +54,14 @@ header {
     margin: 0 10px;
 }
 
+main {
+    height: 100vh;
+}
+
 .main-container {
-    background-image: url("assets/img/home.png") no-repeat;
-    min-width: 640px;
-    height: 320px;
+    background: #df3314 no-repeat center/cover url(img/home.png);
+    height: 100%;
+    width: 900px;
 }
 
 h1 {
