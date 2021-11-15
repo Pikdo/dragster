@@ -1,7 +1,7 @@
 #ifndef DEFINITIONS_H
   #define DEFINITIONS_H
 
-  // #define DEBUG
+  //#define DEBUG
   
   //#define TURBO_SPEED 200
   //#define NORMAL_SPEED 150
@@ -11,12 +11,12 @@
 
   // El GPIO 0 está vinculado al LED_BUILTIN 
   
-  #define GPIO_LEFT_1 4
-  #define GPIO_LEFT_2 15
-  #define GPIO_LEFT_SPEED 5
+  #define GPIO_M2_1 12
+  #define GPIO_M2_2 13
+  #define GPIO_M2_SPEED 16
   
-  #define GPIO_RIGHT_1 12
-  #define GPIO_RIGHT_2 13
-  #define GPIO_RIGHT_SPEED 16
+  #define GPIO_M1_1 15
+  #define GPIO_M1_2 4
+  #define GPIO_M1_SPEED 5
 
 #endif

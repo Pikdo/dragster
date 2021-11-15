@@ -4,11 +4,11 @@
 #include "definitions.h"
 #include "wifiUtils.hpp"
 #include "wsUtils.hpp"
-#include "carControl.h"
+#include "motorControl.h"
 
 void setup() {
 	pinMode(LED_BUILTIN, OUTPUT);
-	carControlInit();
+	motorControlInit();
 	
 #ifdef DEBUG
 	Serial.begin(115200);
@@ -39,5 +39,5 @@ void setup() {
 
 void loop() {
 	webSocket.loop();
-	carControlLoop();
+	motorControlLoop();
 }

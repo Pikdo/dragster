@@ -31,12 +31,12 @@
     const divMessage = document.getElementById('ShowReceivedMessage');
 
     ws.onopen = function() {
-        //ws.pingInterval = setInterval(() => ws.ping(), 1000 * 45);
         //console.log(ws);
+        ws.pingInterval = setInterval(ws.send('{P}'), 4500);
     };
 
     ws.onclose = function() {
-        //clearInterval(ws.pingInterval);
+        clearInterval(ws.pingInterval);
     };
 
     // ws.onping = function() {

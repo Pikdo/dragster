@@ -18,29 +18,28 @@ let driversList = {};
 let raceController = {};
 //const raceStatus = {isRunning: false};
 let isRunnig = false;
-const racerCommandsList = ["{RFU}", "{RFD}", "{RBU}", "{RBD}", "{LFU}", "{LFD}", "{LBU}", "{LBD}", '{GPD}'];
-const racerTimedCommandsList = ["{GTF:}", "{GTB:}"];
+const racerCommandsList = ["{AFU}", "{AFD}", "{ABU}", "{ABD}", "{DFU}", "{DFD}", "{DBU}", "{DBD}", '{GPD}'];
+const racerTimedCommandsList = ["{GTF:}", "{GTB:}", "{ATF:}", "{ATB:}", "{DTF:}", "{DTB:}"];
 //other commands {GPD}, {GTF:10}, {GTB:10}
 const adminCommandsList = ["{startRace}", "{stopRace}"];
 const commandTimeFactor = maxCarCommandTime / maxCommandTime; // relascion para el tiempo de los commando 
 
 let driverCommandControl = {};
 
-//{RFD} Right Foreward Down Inicia el avance en la rueda derecha
-//{RFU} Right Foreward Up Finaliza el avance en la rueda derecha
-//{RBD} Right Backward Down Inicia el retroceso en la rueda derecha
-//{RBU} Right Backward Up Finaliza el retroceso en la rueda derecha
-//{LFD} Left Foreward Down Inicia el avance en la rueda izquierda
-//{LFU} Left Foreward Up Finaliza el avance en la rueda izquierda
-//{LBD} Left Backward Down Inicia el retroceso en la rueda izquierda
-//{LBU} Left Backward Up Finaliza el retroceso en la rueda izquierda
+//{AFD} Acelerate Foreward Down Inicia el avance
+//{AFU} Acelerate Foreward Up Finaliza el avance
+//{ABD} Acelerate Backward Down Inicia el retroceso
+//{ABU} Acelerate Backward Up Finaliza el retroceso
+//{DFD} Direction Foreward Down Inicia el gira la dirección en un centido
+//{DFU} Direction Foreward Up Finaliza el gira la dirección en un centido
+//{DBD} Direction Backward Down Inicia el gira la dirección en el otro centido
+//{DBU} Direction Backward Up Finaliza el gira la dirección en el otro centido
 //{GPD} General Stop Down Finaliza el avance o retroceso de ambas llantas
 //{GTF:_} General Timer Foreward Avance durante un determinado tiempo 1 a 10
 //{GTB:_} General Timer Backward Retroceso durante un determinado tiempo 1 a 10
-//{GUD} General Turbo Down Inicia el avance en ambas llantas al maximo de tiempo
 
 //Deprecated:
-//
+//{GUD} General Turbo Down Inicia el avance en ambas llantas al maximo de tiempo
 //{GUU} General Turbo Up Finaliza el avance en ambas llantas
 
 wssCars.on('connection', socket => {
@@ -71,7 +70,7 @@ wssDrivers.on('connection', socket => {
             const command = validateCommand(socket.driverID, reseivedMessage);
             //console.log('[' + socket.driverID + '] Driver validateCommand:', command);
 
-            if (command.trim() && carsList[socket.carID]) {
+            if (command && command.trim() && carsList[socket.carID]) {
                 //console.log('diver command ', reseivedMessage);
                 // switch (command) {
                 //     case '{GUD}':
@@ -140,7 +139,7 @@ server.on('upgrade', function upgrade(request, socket, head) {
             socket.carID = pathnameSegments[2];
             wssCars.emit('connection', socket, request);
         });
-    } else if (pathnameSegments[1] === 'driver' && pathnameSegments[2] && (pathnameSegments[3] === 'r' || pathnameSegments[3] === 'l')) {
+    } else if (pathnameSegments[1] === 'driver' && pathnameSegments[2] && (pathnameSegments[3] === 'd' || pathnameSegments[3] === 'a')) {
         wssDrivers.handleUpgrade(request, socket, head, socket => {
             socket.carID = pathnameSegments[2];
             socket.driverID = pathnameSegments[2] + '-' + pathnameSegments[3];
@@ -202,21 +201,21 @@ const broadcastCarMessage = (message) => {
     }
 }
 
-const turbo = (driverID) => {
-    if (!driverCommandControl[driverID].GUD) {
-        driverCommandControl[driverID].GUD = true; // Solo se usa 1 vez por cada jugador
-        return '{GTF:' + maxCommandTime + '}';
-    }
-    return '';
-}
+// const turbo = (driverID) => {
+//     if (!driverCommandControl[driverID].GUD) {
+//         driverCommandControl[driverID].GUD = true; // Solo se usa 1 vez por cada jugador
+//         return '{GTF:' + maxCommandTime + '}';
+//     }
+//     return '';
+// }
 
 const validateCommand = (driverID, command) => {
     let commandRef = command;
 
     // Si es comando Turbo, lo valida y sustituye por commando respectivo
-    if (commandRef === '{GUD}') {
-        commandRef = turbo(driverID);
-    }
+    // if (commandRef === '{GUD}') {
+    //     commandRef = turbo(driverID);
+    // }
 
     // Un commando válido debe tener al menos 5 caracteres
     if (commandRef.length < 5) {
@@ -225,7 +224,7 @@ const validateCommand = (driverID, command) => {
 
     // Si es un comando directo lo deja pasar
     if (racerCommandsList.indexOf(commandRef) !== -1) {
-        return commandRef;
+        return commandSidetoNumber(commandRef);
     } else {
         commandBase = commandRef.substring(0, 5);
         // Si es un comando de tiempo, debe revisar y ajustar el valor del tiempo
@@ -233,11 +232,32 @@ const validateCommand = (driverID, command) => {
             let time = getAdjustedCommandTime(commandRef);
             if (time > 0) {
                 // si el tiempo ajustado es mayor a cero lo deja pasar
-                return commandBase + time + "}";
+                return commandSidetoNumber(commandBase + time + "}");
             }
         }
 
         return "";
+    }
+}
+
+const commandSidetoNumber = (command) => {
+    let commandRef = command;
+
+    // Un commando válido debe tener al menos 5 caracteres
+    if (commandRef.length < 5) {
+        return commandRef;
+    }
+
+    // Si es un comando directo lo deja pasar    
+    switch (commandRef.charAt(1)) {
+        case 'A':
+            return commandRef.charAt(0) + '1' + commandRef.substring(2);
+            //break;
+        case 'D':
+            return commandRef.charAt(0) + '2' + commandRef.substring(2);
+            //break;
+        default:
+            return commandRef;
     }
 }
 
