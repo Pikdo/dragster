@@ -1,4 +1,4 @@
-#include "carControl.h"
+#include "motorControl.h"
 #include "definitions.h"
 
 enum Mode_Status {
@@ -44,27 +44,27 @@ void processStop(char event){
 		Serial.println("processStop");
   #endif
   setCurrentSatatus(NORMAL);
-  digitalWrite(GPIO_RIGHT_SPEED, LOW);
-  digitalWrite(GPIO_LEFT_SPEED, LOW);
-  digitalWrite(GPIO_RIGHT_1, LOW);
-  digitalWrite(GPIO_RIGHT_2, LOW);
-  digitalWrite(GPIO_LEFT_1, LOW);
-  digitalWrite(GPIO_LEFT_2, LOW);  
+  digitalWrite(GPIO_M1_SPEED, LOW);
+  digitalWrite(GPIO_M2_SPEED, LOW);
+  digitalWrite(GPIO_M1_1, LOW);
+  digitalWrite(GPIO_M1_2, LOW);
+  digitalWrite(GPIO_M2_1, LOW);
+  digitalWrite(GPIO_M2_2, LOW);  
 }
 
 // void processTurbo(char event){
 //   switch (event) {
 //     case 'D':
-//         digitalWrite(GPIO_RIGHT_SPEED, LOW);
-//         digitalWrite(GPIO_LEFT_SPEED, LOW);
-//         digitalWrite(GPIO_RIGHT_1, HIGH);
-//         digitalWrite(GPIO_RIGHT_2, LOW);
-//         digitalWrite(GPIO_LEFT_1, HIGH);
-//         digitalWrite(GPIO_LEFT_2, LOW);
-//         // analogWrite(GPIO_RIGHT_SPEED, TURBO_SPEED);
-//         // analogWrite(GPIO_LEFT_SPEED, TURBO_SPEED);
-//         digitalWrite(GPIO_RIGHT_SPEED, HIGH);
-//         digitalWrite(GPIO_LEFT_SPEED, HIGH);
+//         digitalWrite(GPIO_M1_SPEED, LOW);
+//         digitalWrite(GPIO_M2_SPEED, LOW);
+//         digitalWrite(GPIO_M1_1, HIGH);
+//         digitalWrite(GPIO_M1_2, LOW);
+//         digitalWrite(GPIO_M2_1, HIGH);
+//         digitalWrite(GPIO_M2_2, LOW);
+//         // analogWrite(GPIO_M1_SPEED, TURBO_SPEED);
+//         // analogWrite(GPIO_M2_SPEED, TURBO_SPEED);
+//         digitalWrite(GPIO_M1_SPEED, HIGH);
+//         digitalWrite(GPIO_M2_SPEED, HIGH);
 //         setCurrentSatatus(TIMER_FOREWARD);
 //       break;
 //     default:
@@ -79,29 +79,29 @@ void processTimer(char direction, unsigned int timer){
   }
   switch (direction) {
     case 'F':	        
-        digitalWrite(GPIO_RIGHT_SPEED, LOW);
-        digitalWrite(GPIO_LEFT_SPEED, LOW);
-        digitalWrite(GPIO_RIGHT_1, HIGH);
-        digitalWrite(GPIO_RIGHT_2, LOW);
-        digitalWrite(GPIO_LEFT_1, HIGH);
-        digitalWrite(GPIO_LEFT_2, LOW);
-        // analogWrite(GPIO_RIGHT_SPEED, TURBO_SPEED);
-        // analogWrite(GPIO_LEFT_SPEED, TURBO_SPEED);
-        digitalWrite(GPIO_RIGHT_SPEED, HIGH);
-        digitalWrite(GPIO_LEFT_SPEED, HIGH);
+        digitalWrite(GPIO_M1_SPEED, LOW);
+        digitalWrite(GPIO_M2_SPEED, LOW);
+        digitalWrite(GPIO_M1_1, HIGH);
+        digitalWrite(GPIO_M1_2, LOW);
+        digitalWrite(GPIO_M2_1, HIGH);
+        digitalWrite(GPIO_M2_2, LOW);
+        // analogWrite(GPIO_M1_SPEED, TURBO_SPEED);
+        // analogWrite(GPIO_M2_SPEED, TURBO_SPEED);
+        digitalWrite(GPIO_M1_SPEED, HIGH);
+        digitalWrite(GPIO_M2_SPEED, HIGH);
         setCurrentSatatus(TIMER_FOREWARD, timer);
         break;
     case 'B':
-        digitalWrite(GPIO_RIGHT_SPEED, LOW);
-        digitalWrite(GPIO_LEFT_SPEED, LOW);
-        digitalWrite(GPIO_RIGHT_1, LOW);
-        digitalWrite(GPIO_RIGHT_2, HIGH);
-        digitalWrite(GPIO_LEFT_1, LOW);
-        digitalWrite(GPIO_LEFT_2, HIGH);
-        // analogWrite(GPIO_RIGHT_SPEED, TURBO_SPEED);
-        // analogWrite(GPIO_LEFT_SPEED, TURBO_SPEED);
-        digitalWrite(GPIO_RIGHT_SPEED, HIGH);
-        digitalWrite(GPIO_LEFT_SPEED, HIGH);
+        digitalWrite(GPIO_M1_SPEED, LOW);
+        digitalWrite(GPIO_M2_SPEED, LOW);
+        digitalWrite(GPIO_M1_1, LOW);
+        digitalWrite(GPIO_M1_2, HIGH);
+        digitalWrite(GPIO_M2_1, LOW);
+        digitalWrite(GPIO_M2_2, HIGH);
+        // analogWrite(GPIO_M1_SPEED, TURBO_SPEED);
+        // analogWrite(GPIO_M2_SPEED, TURBO_SPEED);
+        digitalWrite(GPIO_M1_SPEED, HIGH);
+        digitalWrite(GPIO_M2_SPEED, HIGH);
         setCurrentSatatus(TIMER_FOREWARD, timer);
         break;
     }  
@@ -116,14 +116,14 @@ void processTireEvent(char tire, char direction, char event){
 
   switch (tire) {
     case 'R':
-      gpio_speed=GPIO_RIGHT_SPEED;
-      gpio1=GPIO_RIGHT_1;
-      gpio2=GPIO_RIGHT_2;
+      gpio_speed=GPIO_M1_SPEED;
+      gpio1=GPIO_M1_1;
+      gpio2=GPIO_M1_2;
       break;
     case 'L':      
-      gpio_speed=GPIO_LEFT_SPEED;
-      gpio1=GPIO_LEFT_1;
-      gpio2=GPIO_LEFT_2;
+      gpio_speed=GPIO_M2_SPEED;
+      gpio1=GPIO_M2_1;
+      gpio2=GPIO_M2_2;
       break;
     default:
       return;
@@ -166,7 +166,7 @@ void processGeneralEvent(char command, char event, unsigned int timer){
   }
 }
 
-void carControlLoop(){
+void motorControlLoop(){
   switch (currentSatatus) {
     case TIMER_FOREWARD:
       if (millis() >= finishTime){
@@ -178,21 +178,21 @@ void carControlLoop(){
   }
 }
 
-void carControlInit() {
+void motorControlInit() {
   setCurrentSatatus(NORMAL);
 
-  pinMode(GPIO_LEFT_1, OUTPUT);
-  pinMode(GPIO_LEFT_2, OUTPUT);
-  pinMode(GPIO_LEFT_SPEED, OUTPUT);
-  pinMode(GPIO_RIGHT_1, OUTPUT);
-  pinMode(GPIO_RIGHT_2, OUTPUT);
-  pinMode(GPIO_RIGHT_SPEED, OUTPUT);
-	digitalWrite(GPIO_LEFT_1, LOW);
-	digitalWrite(GPIO_LEFT_2, LOW);
-	digitalWrite(GPIO_LEFT_SPEED, LOW);
-	digitalWrite(GPIO_RIGHT_1, LOW);
-	digitalWrite(GPIO_RIGHT_2, LOW);
-	digitalWrite(GPIO_RIGHT_SPEED, LOW);
+  pinMode(GPIO_M2_1, OUTPUT);
+  pinMode(GPIO_M2_2, OUTPUT);
+  pinMode(GPIO_M2_SPEED, OUTPUT);
+  pinMode(GPIO_M1_1, OUTPUT);
+  pinMode(GPIO_M1_2, OUTPUT);
+  pinMode(GPIO_M1_SPEED, OUTPUT);
+	digitalWrite(GPIO_M2_1, LOW);
+	digitalWrite(GPIO_M2_2, LOW);
+	digitalWrite(GPIO_M2_SPEED, LOW);
+	digitalWrite(GPIO_M1_1, LOW);
+	digitalWrite(GPIO_M1_2, LOW);
+	digitalWrite(GPIO_M1_SPEED, LOW);
 
   // #if defined(ESP8266)
   //    analogWriteRange(255);

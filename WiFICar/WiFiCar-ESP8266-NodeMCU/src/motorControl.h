@@ -3,13 +3,13 @@
 
 #include <Arduino.h>
 
-void carControlInit();
+void motorControlInit();
 void processCommand(uint8_t * commantStr, size_t length);
 //void processTireEvent(char tire, char direction, char event);
 //void processGeneralEvent(char command, char event);
 //void processTurbo(char event);
 //void processStop(char event);
-void carControlLoop();
+void motorControlLoop();
 
 
 #endif
