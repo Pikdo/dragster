@@ -30,13 +30,17 @@ let driverCommandControl = {};
 //{AFU} Acelerate Foreward Up Finaliza el avance
 //{ABD} Acelerate Backward Down Inicia el retroceso
 //{ABU} Acelerate Backward Up Finaliza el retroceso
-//{DFD} Direction Foreward Down Inicia el gira la dirección en un centido
-//{DFU} Direction Foreward Up Finaliza el gira la dirección en un centido
-//{DBD} Direction Backward Down Inicia el gira la dirección en el otro centido
-//{DBU} Direction Backward Up Finaliza el gira la dirección en el otro centido
+//{DFD} Direction Foreward Down Inicia el gira la dirección en un centido (izquierda)
+//{DFU} Direction Foreward Up Finaliza el gira la dirección en un centido (izquierda)
+//{DBD} Direction Backward Down Inicia el gira la dirección en el otro centido (derecha)
+//{DBU} Direction Backward Up Finaliza el gira la dirección en el otro centido (derecha)
 //{GPD} General Stop Down Finaliza el avance o retroceso de ambas llantas
-//{GTF:_} General Timer Foreward Avance durante un determinado tiempo 1 a 10
-//{GTB:_} General Timer Backward Retroceso durante un determinado tiempo 1 a 10
+//{ATF:_} Acleración Timer Backward Avance durante un determinado tiempo 1 a 10 
+//{ATB:_} Acleración Timer Backward Retroceso durante un determinado tiempo 1 a 10
+//{DTF:_} Dirección Backward Avance durante un determinado tiempo 1 a 10 (izquierda)
+//{DTB:_} Dirección Backward Retroceso durante un determinado tiempo 1 a 10 (derecha)
+//{GTF:_} General Timer Foreward Avance durante un determinado tiempo 1 a 10 (Ambos Motores)
+//{GTB:_} General Timer Backward Retroceso durante un determinado tiempo 1 a 10 (Ambos Motores)
 
 //Deprecated:
 //{GUD} General Turbo Down Inicia el avance en ambas llantas al maximo de tiempo
