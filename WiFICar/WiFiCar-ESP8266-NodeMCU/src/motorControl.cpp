@@ -8,18 +8,22 @@ enum Mode_Status {
 
 unsigned long finishTime;
 
-//{RFD} Right Foreward Down Inicia el avance en la rueda derecha
-//{RFU} Right Foreward Up Finaliza el avance en la rueda derecha
-//{RBD} Right Backward Down Inicia el retroceso en la rueda derecha
-//{RBU} Right Backward Up Finaliza el retroceso en la rueda derecha
-//{LFD} Left Foreward Down Inicia el avance en la rueda izquierda
-//{LFU} Left Foreward Up Finaliza el avance en la rueda izquierda
-//{LBD} Left Backward Down Inicia el retroceso en la rueda izquierda
-//{LBU} Left Backward Up Finaliza el retroceso en la rueda izquierda
-//{GPD} General Stop Down Finaliza el avance o retroceso de ambas llantas
-//{GTF:3000} General Timer Foreward Avance durante un determinado tiempo en milisegundos
-//{GTB:3000} General Timer Backward Retroceso durante un determinado tiempo en milisegundos
-	
+//{1FD} M1 Foreward Down Inicia el avance en motor 1
+//{1FU} M1 Foreward Up Finaliza el avance en motor 1
+//{1BD} M1 Backward Down Inicia el retroceso en motor 1
+//{1BU} M1 Backward Up Finaliza el retroceso en motor 1
+//{2FD} M2 Foreward Down Inicia el avance en motor 2
+//{2FU} M2 Foreward Up Finaliza el avance en motor 2
+//{2BD} M2 Backward Down Inicia el retroceso en motor 2
+//{2BU} M2 Backward Up Finaliza el retroceso en motor 2
+//{GPD} General Stop Down Finaliza el avance o retroceso de ambos motores
+//{GTF:3000} General Timer Foreward Avance durante un determinado tiempo en milisegundos ambos motores
+//{GTB:3000} General Timer Backward Retroceso durante un determinado tiempo en milisegundos ambos motores
+//{1TF:3000} M1 Timer Foreward Avance durante un determinado tiempo en milisegundos motor 1
+//{1TB:3000} M1 Timer Backward Retroceso durante un determinado tiempo en milisegundos motor 1
+//{2TF:3000} M2 Timer Foreward Avance durante un determinado tiempo en milisegundos motor 2
+//{2TB:3000} M2 Timer Backward Retroceso durante un determinado tiempo en milisegundos motor 2
+
 //Deprecated:
 //{GUD} General Turbo Down Inicia el avance en ambas llantas
 //{GUU} General Turbo Up Finaliza el avance en ambas llantas
@@ -107,20 +111,30 @@ void processTimer(char direction, unsigned int timer){
     }  
 }
 
-void processTireEvent(char tire, char direction, char event){
+void processMotorEvent(char motor, char direction, char event){
+  #ifdef DEBUG
+		Serial.println("processMotorEvent");
+  #endif
+
   if (currentSatatus != NORMAL){
     return; // Si está en algún commando por tiempo no ejecuta los comandos individuales
   }
 
   uint8_t gpio_speed, gpio1, gpio2;
 
-  switch (tire) {
-    case 'R':
+  switch (motor) {
+    case '1':
+      #ifdef DEBUG
+        Serial.println("motor 1");
+      #endif
       gpio_speed=GPIO_M1_SPEED;
       gpio1=GPIO_M1_1;
       gpio2=GPIO_M1_2;
       break;
-    case 'L':      
+    case '2':      
+      #ifdef DEBUG
+        Serial.println("motor 2");
+      #endif
       gpio_speed=GPIO_M2_SPEED;
       gpio1=GPIO_M2_1;
       gpio2=GPIO_M2_2;
@@ -153,14 +167,23 @@ void processTireEvent(char tire, char direction, char event){
 }
 
 void processGeneralEvent(char command, char event, unsigned int timer){
+  #ifdef DEBUG
+    Serial.println("processGeneralEvent");
+  #endif
   switch (command) {
     // case 'U': //Turbo
     //     processTurbo(event);
     //   break;   
     case 'P': //Stop
+        #ifdef DEBUG
+          Serial.println("Stop");
+        #endif
         processStop(event);
       break;   
     case 'T': //Timer foreward and backward
+        #ifdef DEBUG
+          Serial.println("Timer");
+        #endif
         processTimer(event, timer);
       break;
   }
@@ -217,9 +240,9 @@ void processCommand(uint8_t * commantStr, size_t length){
   }
 	
   switch (commantStr[1]) {
-    case 'R':
-    case 'L':
-      processTireEvent(commantStr[1], commantStr[2], commantStr[3]);
+    case '1':
+    case '2':
+      processMotorEvent(commantStr[1], commantStr[2], commantStr[3]);
       break;
     case 'G':
       processGeneralEvent(commantStr[2], commantStr[3], timer);

@@ -5,7 +5,7 @@
 
 void motorControlInit();
 void processCommand(uint8_t * commantStr, size_t length);
-//void processTireEvent(char tire, char direction, char event);
+//void processMotorEvent(char tire, char direction, char event);
 //void processGeneralEvent(char command, char event);
 //void processTurbo(char event);
 //void processStop(char event);
