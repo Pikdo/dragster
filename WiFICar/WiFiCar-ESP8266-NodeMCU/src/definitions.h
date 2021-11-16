@@ -16,8 +16,8 @@
   #define GPIO_M2_2 D3 //0
   #define GPIO_M2_SPEED D2 //14
   
-  #define GPIO_M1_1 D5 //14
-  #define GPIO_M1_2 D7 //13
+  #define GPIO_M1_1 D7 //13
+  #define GPIO_M1_2 D5 //14
   #define GPIO_M1_SPEED D6 //12
 
 #endif
