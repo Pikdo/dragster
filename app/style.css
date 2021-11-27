@@ -24,11 +24,12 @@ html {
     font-size: 62.5%; /* para usar medidas rem*/
     font-family: "Roboto", sans-serif;
     scroll-behavior: smooth; /*Para crear una smooth scrolling*/
+
+    touch-action: none;
 }
 body {
     text-rendering: optimizeLegibility;
     background-color: var(--black);
-    touch-action: manipulation;
 }
 
 header {
