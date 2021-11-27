@@ -20,16 +20,22 @@
 }
 
 html {
-    text-size-adjust: 100%;
     font-size: 62.5%; /* para usar medidas rem*/
     font-family: "Roboto", sans-serif;
     scroll-behavior: smooth; /*Para crear una smooth scrolling*/
-
-    touch-action: none;
+    touch-action: manipulation;
 }
+
 body {
     text-rendering: optimizeLegibility;
     background-color: var(--black);
+}
+
+p,
+h1,
+h2,
+input {
+    touch-action: none;
 }
 
 header {
