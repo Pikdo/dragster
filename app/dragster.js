@@ -7,6 +7,6 @@ function addEventos() {
     var btn_registrar = document.getElementById("btn_registrar");
 
     btn_registrar.addEventListener("click", function () {
-        alert("Hola " + txt_name_player.value + " has sido registrad@ en mi corazón 💘, te amo");
+        alert("Hola " + txt_name_player.value + " has sido registrad@ en mi app heart 💘");
     });
 }
