@@ -11,6 +11,7 @@
     --secundary-blue: #258ef0;
     --black: #333;
     --white: #fff;
+    --green: #009688;
 }
 
 * {
@@ -74,8 +75,8 @@ main {
     background: no-repeat center/cover url(img/home.png);
     text-align: center;
 
-    animation: animatedBackground 15s linear alternate infinite;
-    -webkit-animation: animatedBackground 15s linear alternate infinite;
+    animation: animatedBackground 16s linear alternate infinite;
+    -webkit-animation: animatedBackground 16s linear alternate infinite;
 }
 
 /*Animación del background */
@@ -105,6 +106,7 @@ main {
     width: 280px;
     margin: auto;
     top: 20px;
+    margin-bottom: 20px;
     text-align: left;
     padding: 10px;
     background-color: var(--white);
@@ -121,30 +123,100 @@ main {
     line-height: 1.8rem;
 }
 
-.form input {
+.estado {
+    color: var(--green);
+}
+
+.form_input {
     font-style: normal;
     font-weight: 500;
     font-size: 1.8rem;
     line-height: 1.8rem;
-    padding: 8px;
-    margin-top: 15px;
+
     width: 100%;
     height: 40px;
-    border-radius: 3px;
+
+    padding: 8px;
+    margin-top: 15px;
+
+    border-radius: 2px;
     border: 1px solid var(--primary-blue);
+
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
-.form input[type="button"] {
+.form_button {
     background-color: var(--primary-blue);
     color: var(--white);
     border: 0px;
-    border-radius: 1px;
 }
 
 .form input[type="button"]:hover {
-    border: 1px solid var(--black);
+    border: 2px solid var(--black);
 }
 
 .form input[type="button"]:active {
     background-color: var(--secundary-blue);
+}
+
+.form_titulos {
+    display: flex;
+    width: 100%;
+}
+
+.form__titulos_left {
+    width: 50%;
+    justify-self: start;
+}
+
+.form__titulos_right {
+    width: 50%;
+    justify-self: end;
+    text-align: right;
+}
+
+.controles_container {
+    display: flex;
+}
+
+.controles_up_down {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: center;
+}
+
+.controles_left_right {
+    text-align: center;
+    width: 50%;
+    align-self: center;
+}
+
+.arrow {
+    width: 50px;
+    border: 0px;
+    color: var(--white);
+    background-color: var(--primary-blue);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding: 5px;
+    margin: 5px;
+}
+
+.jugadores_container {
+    display: flex;
+}
+
+.jugadores_container p {
+    font-size: 1.8rem;
+}
+
+.jugador_up_down {
+    width: 100%;
+    text-align: center;
+}
+
+.jugador_left_right {
+    width: 100%;
+
+    text-align: center;
 }
