@@ -73,6 +73,20 @@ main {
 
     background: no-repeat center/cover url(img/home.png);
     text-align: center;
+
+    animation: animatedBackground 15s linear alternate infinite;
+}
+
+@keyframes animatedBackground {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 50% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
 }
 
 /* FORMULARIOS */
