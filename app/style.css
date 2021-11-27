@@ -23,15 +23,19 @@ html {
     font-family: "Roboto", sans-serif;
     scroll-behavior: smooth; /*Para crear una smooth scrolling*/
 }
+body {
+    background-color: var(--black);
+    touch-action: manipulation;
+}
 
 header {
     position: relative;
     width: 100%;
     min-width: 320px;
-    height: 100px;
+    height: 70px;
 }
 .header-title {
-    height: 100px;
+    height: 70px;
     background-color: var(--black);
 }
 
@@ -39,8 +43,7 @@ header {
     display: inline-flex;
     font-size: 3.8rem;
     font-weight: bold;
-    line-height: 100px;
-    touch-action: manipulation;
+    line-height: 70px;
 }
 
 .header-title__dragster {
@@ -62,7 +65,8 @@ main {
     min-width: 320px;
 
     height: 100%;
-    min-height: 83vh;
+    min-height: 85vh;
+    max-height: 925px;
 
     background: no-repeat center/cover url(img/home.png);
     text-align: center;
