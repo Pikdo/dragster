@@ -20,11 +20,13 @@
 }
 
 html {
+    text-size-adjust: 100%;
     font-size: 62.5%; /* para usar medidas rem*/
     font-family: "Roboto", sans-serif;
     scroll-behavior: smooth; /*Para crear una smooth scrolling*/
 }
 body {
+    text-rendering: optimizeLegibility;
     background-color: var(--black);
     touch-action: manipulation;
 }
@@ -120,7 +122,7 @@ main {
     background-color: var(--primary-blue);
     color: var(--white);
     border: 0px;
-    border-radius: 3px;
+    border-radius: 1px;
 }
 
 .form input[type="button"]:hover {
