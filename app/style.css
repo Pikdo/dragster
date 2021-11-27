@@ -75,8 +75,10 @@ main {
     text-align: center;
 
     animation: animatedBackground 15s linear alternate infinite;
+    -webkit-animation: animatedBackground 15s linear alternate infinite;
 }
 
+/*Animación del background */
 @keyframes animatedBackground {
     0% {
         background-position: 0 0;
