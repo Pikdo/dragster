@@ -7,7 +7,8 @@
 :root {
     /* Colores */
     --principal: #df3314;
-    --secundary: #1581c0;
+    --primary-blue: #0d82ee;
+    --secundary-blue: #258ef0;
     --black: #333;
     --white: #fff;
 }
@@ -25,7 +26,7 @@ html {
 }
 body {
     background-color: var(--black);
-    touch-action: manipulation;
+    /*touch-action: manipulation;*/
 }
 
 header {
@@ -51,7 +52,7 @@ header {
     margin-left: 10px;
 }
 .header-title__race {
-    color: var(--secundary);
+    color: var(--primary-blue);
     margin-left: 5px;
 }
 
@@ -70,4 +71,62 @@ main {
 
     background: no-repeat center/cover url(img/home.png);
     text-align: center;
+}
+
+/* FORMULARIOS */
+
+.separador {
+    height: 5px;
+    width: 100%;
+    background-color: #0d82ee;
+    margin: 5px 0 5px 0;
+}
+
+.form {
+    position: relative;
+    width: 280px;
+    margin: auto;
+    top: 20px;
+    text-align: left;
+    padding: 10px;
+    background-color: var(--white);
+
+    border: 1px solid var(--primary-blue);
+    border-radius: 3px;
+}
+
+.form__titulo {
+    margin-top: 5px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+}
+
+.form input {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+    padding: 8px;
+    margin-top: 15px;
+    width: 100%;
+    height: 40px;
+    border-radius: 3px;
+    border: 1px solid var(--primary-blue);
+}
+
+.form input[type="button"] {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: 0px;
+    border-radius: 3px;
+}
+
+.form input[type="button"]:hover {
+    border: 1px solid var(--black);
+}
+
+.form input[type="button"]:active {
+    background-color: var(--secundary-blue);
 }
