@@ -194,6 +194,11 @@ main {
     width: 60%;
     align-self: center;
 }
+/*Css para deshabilitar una parte de los controles*/
+.controles_disabled {
+    opacity: 30%;
+    pointer-events: none;
+}
 
 .arrow {
     font-size: 3rem;
