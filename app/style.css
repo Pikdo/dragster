@@ -220,6 +220,7 @@ main {
 
 .jugadores_container p {
     font-size: 1.8rem;
+    padding-bottom: 15px;
 }
 
 .jugador_up_down {
@@ -229,6 +230,22 @@ main {
 
 .jugador_left_right {
     width: 50%;
-
     text-align: center;
+}
+
+/*ADMIN*/
+
+.jugadores_equipo_1 {
+    width: 50%;
+    text-align: right;
+}
+
+.jugadores_equipo_2 {
+    width: 50%;
+    text-align: left;
+}
+
+.versus {
+    width: 10%;
+    padding: 30px 10px 0 10px;
 }
