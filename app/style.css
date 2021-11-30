@@ -185,13 +185,13 @@ main {
 .controles_up_down {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 50%;
     align-items: center;
 }
 
 .controles_left_right {
     text-align: center;
-    width: 60%;
+    width: 50%;
     align-self: center;
 }
 /*Css para deshabilitar una parte de los controles*/
@@ -223,12 +223,12 @@ main {
 }
 
 .jugador_up_down {
-    width: 40%;
+    width: 50%;
     text-align: center;
 }
 
 .jugador_left_right {
-    width: 60%;
+    width: 50%;
 
     text-align: center;
 }
