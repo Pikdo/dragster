@@ -178,18 +178,19 @@ main {
 
 .controles_container {
     display: flex;
+    margin-bottom: 20px;
 }
 
 .controles_up_down {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 40%;
     align-items: center;
 }
 
 .controles_left_right {
     text-align: center;
-    width: 50%;
+    width: 60%;
     align-self: center;
 }
 
@@ -202,8 +203,9 @@ main {
     color: var(--white);
     background-color: var(--primary-blue);
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    padding: 5px;
-    margin: 5px;
+    padding: 3px;
+    margin: 3px;
+    text-align: center;
 }
 
 .jugadores_container {
@@ -215,12 +217,12 @@ main {
 }
 
 .jugador_up_down {
-    width: 100%;
+    width: 40%;
     text-align: center;
 }
 
 .jugador_left_right {
-    width: 100%;
+    width: 60%;
 
     text-align: center;
 }
