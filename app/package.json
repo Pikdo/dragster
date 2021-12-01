@@ -1,0 +1,36 @@
+{
+    "name": "dragster",
+    "version": "1.0.0",
+    "description": "SPA Game Dragster",
+    "main": "dragster.js",
+    "scripts": {
+        "build": "webpack --mode production",
+        "start": "webpack serve --open --mode development"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Pikdo/dragster.git"
+    },
+    "keywords": [
+        "wssocket",
+        "javascript",
+        "game",
+        "iot"
+    ],
+    "author": "pikdo, diegojuc",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Pikdo/dragster/issues"
+    },
+    "homepage": "https://github.com/Pikdo/dragster#readme",
+    "devDependencies": {
+        "@babel/core": "^7.16.0",
+        "@webpack-cli/serve": "^1.6.0",
+        "babel-loader": "^8.2.3",
+        "copy-webpack-plugin": "^10.0.0",
+        "html-webpack-plugin": "^5.5.0",
+        "webpack": "^5.64.4",
+        "webpack-cli": "^4.9.1",
+        "webpack-dev-server": "^4.6.0"
+    }
+}

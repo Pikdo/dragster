@@ -1,0 +1,256 @@
+/**
+*  DRAGSTER CSS
+*  @autor: pikdo
+*  @date: 14/10/2021  
+*/
+
+:root {
+    /* Colores */
+    --principal: #df3314;
+    --primary-blue: #0d82ee;
+    --secundary-blue: #258ef0;
+    --black: #333;
+    --white: #fff;
+    --green: #009688;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+html {
+    font-size: 62.5%; /* para usar medidas rem*/
+    font-family: "Roboto", sans-serif;
+    scroll-behavior: smooth; /*Para crear una smooth scrolling*/
+}
+
+body {
+    text-rendering: optimizeLegibility;
+    background-color: var(--black);
+    touch-action: manipulation;
+}
+
+header {
+    position: relative;
+    width: 100%;
+    min-width: 320px;
+    height: 70px;
+}
+.header-title {
+    height: 70px;
+    background-color: var(--black);
+}
+
+.header-title p {
+    display: inline-flex;
+    font-size: 3.8rem;
+    font-weight: bold;
+    line-height: 70px;
+}
+
+.header-title__dragster {
+    color: var(--principal);
+    margin-left: 10px;
+}
+.header-title__race {
+    color: var(--primary-blue);
+    margin-left: 5px;
+}
+
+main {
+    width: 100%;
+    background-color: var(--black);
+}
+
+.main-container {
+    width: 100%;
+    min-width: 320px;
+
+    height: 100%;
+    min-height: 85vh;
+    max-height: 925px;
+
+    background: no-repeat center/cover url(home.png);
+    text-align: center;
+
+    animation: animatedBackground 16s linear alternate infinite;
+    -webkit-animation: animatedBackground 16s linear alternate infinite;
+}
+
+/*Animación del background */
+@keyframes animatedBackground {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 50% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+/* FORMULARIOS */
+
+.separador {
+    height: 5px;
+    width: 100%;
+    background-color: #0d82ee;
+    margin: 5px 0 5px 0;
+}
+
+.form {
+    position: relative;
+    width: 280px;
+    margin: auto;
+    top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    padding: 10px;
+    background-color: var(--white);
+
+    border: 1px solid var(--primary-blue);
+    border-radius: 3px;
+}
+
+.form__titulo {
+    margin-top: 5px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+}
+
+.estado {
+    color: var(--green);
+}
+
+.form_input {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+
+    width: 100%;
+    height: 40px;
+
+    padding: 8px;
+    margin-top: 15px;
+
+    border-radius: 2px;
+    border: 1px solid var(--primary-blue);
+
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.form_button {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: 0px;
+}
+
+.form input[type="button"]:hover {
+    border: 2px solid var(--black);
+}
+
+.form input[type="button"]:active {
+    background-color: var(--secundary-blue);
+}
+
+.form_titulos {
+    display: flex;
+    width: 100%;
+}
+
+.form__titulos_left {
+    width: 50%;
+    justify-self: start;
+}
+
+.form__titulos_right {
+    width: 50%;
+    justify-self: end;
+    text-align: right;
+}
+
+.control-section {
+    width: 100%;
+    min-width: 320px;
+}
+
+.controles_container {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.controles_up_down {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+}
+
+.controles_left_right {
+    text-align: center;
+    width: 50%;
+    align-self: center;
+}
+/*Css para deshabilitar una parte de los controles*/
+.controles_disabled {
+    opacity: 30%;
+    pointer-events: none;
+}
+
+.arrow {
+    font-size: 2.5rem;
+    border-radius: 50px;
+    width: 50px;
+    height: 60px;
+    border: 0px;
+    color: var(--white);
+    background-color: var(--primary-blue);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding: 3px;
+    margin: 3px;
+    text-align: center;
+}
+
+.jugadores_container {
+    display: flex;
+}
+
+.jugadores_container p {
+    font-size: 1.8rem;
+    padding-bottom: 15px;
+}
+
+.jugador_up_down {
+    width: 50%;
+    text-align: center;
+}
+
+.jugador_left_right {
+    width: 50%;
+    text-align: center;
+}
+
+/*ADMIN*/
+
+.jugadores_equipo_1 {
+    width: 50%;
+    text-align: right;
+}
+
+.jugadores_equipo_2 {
+    width: 50%;
+    text-align: left;
+}
+
+.versus {
+    width: 10%;
+    padding: 30px 10px 0 10px;
+}
