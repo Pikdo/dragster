@@ -23,6 +23,13 @@ module.exports = {
             },
         ],
     },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, "public"),
+        },
+        compress: true,
+        port: 9000,
+    },
     plugins: [
         //Establecemos los plugins que vamos a utilizar
         new HtmlWebpackPlugin({
@@ -33,7 +40,7 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 { from: "./src/styles/style.css", to: "" },
-                { from: "./src/img/home.png", to: "" },
+                { from: "./src/img/home.webp", to: "" },
             ],
         }),
     ], //template base

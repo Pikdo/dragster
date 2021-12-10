@@ -1,5 +1,4 @@
 import Header from "../templates/Header";
-import Home from "../pages/Home";
 import Registro from "../pages/Registro";
 import Controles from "../pages/Controles";
 import Admin from "../pages/Admin";
@@ -8,10 +7,9 @@ import getHash from "../utils/getHash";
 import resolveRoutes from "../utils/resolveRoutes";
 
 const routes = {
-    "/": Home,
-    "/registro": Registro,
-    "/admin": Admin,
+    "/": Registro,
     "/controles": Controles,
+    "/admin": Admin,
 };
 
 const router = async () => {
