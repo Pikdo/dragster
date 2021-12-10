@@ -34,13 +34,13 @@ module.exports = {
         //Establecemos los plugins que vamos a utilizar
         new HtmlWebpackPlugin({
             inject: true, //Cómo vamos a inyectar un valor a un archivo HTML.
-            template: "./public/index.html", // Dirección donde se encuentra el template base de HTML
-            filename: "./index.html", // El nombre que tendrá el archivo en el dist
+            template: "public/index.html", // Dirección donde se encuentra el template base de HTML
+            filename: "index.html", // El nombre que tendrá el archivo en el dist
         }),
         new CopyWebpackPlugin({
             patterns: [
-                { from: "./src/styles/style.css", to: "" },
-                { from: "./src/img/home.webp", to: "" },
+                { from: "src/styles/", to: "styles/" }, // copia los archivos a una carpeta styles
+                { from: "src/img/", to: "img/" }, // copia los archivos a una carpeta img
             ],
         }),
     ], //template base

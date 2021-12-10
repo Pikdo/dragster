@@ -3,3 +3,4 @@
 #*.png
 #/WiFiCar # esto también afecta a los otros desarrolladores
 #/backend # esto también afecta a los otros desarrolladores
+/app/node_modules
