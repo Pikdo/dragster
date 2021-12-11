@@ -38,8 +38,8 @@
     </div> -->
 </body>
 <script>
-    //const serverName = 'ws://192.168.1.69';
-    const serverName = 'wss://remotecarcontrol.herokuapp.com';
+    const serverName = 'ws://192.168.1.69';
+    //const serverName = 'wss://remotecarcontrol.herokuapp.com';
     const ws = new WebSocket(serverName + '/driver/1/a');
 
     const divMessage = document.getElementById('ShowReceivedMessage');

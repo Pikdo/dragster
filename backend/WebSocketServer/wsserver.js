@@ -21,8 +21,10 @@ let isRunnig = false;
 const racerCommandsList = ["{AFU}", "{AFD}", "{ABU}", "{ABD}", "{DFU}", "{DFD}", "{DBU}", "{DBD}", '{GPD}'];
 const racerTimedCommandsList = ["{GTF:}", "{GTB:}", "{ATF:}", "{ATB:}", "{DTF:}", "{DTB:}"];
 //other commands {GPD}, {GTF:10}, {GTB:10}
-const adminCommandsList = ["{startRace}", "{stopRace}"];
+const adminCommandsList = ["{startRace}", "{stopRace}", "{winner:1}", "{winner:2}"];
 const commandTimeFactor = maxCarCommandTime / maxCommandTime; // relascion para el tiempo de los commando 
+let driverData = [{ uri: "/driver/1/a", car: "1", Motor: "A" }, { uri: "/driver/1/d", car: "1", Motor: "D" }, { uri: "/driver/2/a", car: "2", Motor: "A" }, { uri: "/driver/2/d", car: "2", Motor: "D" }];
+let driverDataLength = driverData.length;
 
 let driverCommandControl = {};
 
@@ -101,7 +103,7 @@ wssRaceController.on('connection', socket => {
 
     socket.on('message', function(message) {
         const reseivedMessage = message.toString();
-        //console.log('[' + socket.driverID + '] Driver Received Message:', message.toString());
+        //console.log('[RaceController] Received Message:', message.toString());
         if (adminCommandsList.indexOf(reseivedMessage) !== -1) {
             switch (reseivedMessage) {
                 case '{startRace}':
@@ -109,6 +111,12 @@ wssRaceController.on('connection', socket => {
                     break;
                 case '{stopRace}':
                     raceStop();
+                    break;
+                case '{winner:1}':
+                    raceStop(1);
+                    break;
+                case '{winner:2}':
+                    raceStop(2);
                     break;
                 default:
                     break;
@@ -178,11 +186,20 @@ const raceStart = () => {
     }, 1200);
 }
 
-const raceStop = () => {
+const raceStop = (winner) => {
+    if (!isRunnig) {
+        return;
+    }
+
     isRunnig = false
     broadcastCarMessage('{GPD}');
-
-    broadcastDriversMessage("La carrera ha terminado....");
+    console.log('winner: ', winner);
+    //broadcastDriversMessage("La carrera ha terminado....");
+    if (winner) {
+        broadcastDriversMessage("{winner:\"" + winner + "\"}");
+    }
+    killDrivers();
+    driverDataLength = driverData.length;
 
     // Detiene turbos en uso
     // for (var driverID in driverCommandControl) {
@@ -194,14 +211,24 @@ const raceStop = () => {
 
 const broadcastDriversMessage = (message) => {
     for (var driverID in driversList) {
-        driversList[driverID].send(message);
+        if (driversList[driverID] && driversList[driverID].send) {
+            driversList[driverID].send(message);
+        }
     }
     raceController.send(message);
 }
 
 const broadcastCarMessage = (message) => {
     for (var carID in carsList) {
+        console.log('mensahe:', carID);
         carsList[carID].send(message);
+    }
+}
+
+const killDrivers = () => {
+    for (var driverID in driversList) {
+        driversList[driverID].close();
+        driversList[driverID] = {};
     }
 }
 
@@ -337,14 +364,38 @@ const getAdjustedCommandTime = (command) => {
 app.use('/img', express.static(path.join(__dirname, 'public/images')));
 app.use('/', express.static(path.join(__dirname, 'public')));
 
-// app.get('/favico.ico', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'public/images')"/public/images/favicon.ico");
-// });
-
 app.get("/admin", (req, res) => {
     res.sendFile(__dirname + "/pages/client_race_controller.html");
 });
 
-app.get("/:carid/:carside", (req, res) => {
-    res.sendFile(__dirname + "/pages/client_" + req.params.carid + "_" + req.params.carside + ".html");
+// app.get("/:carid/:carside", (req, res) => {
+//     res.sendFile(__dirname + "/pages/client_" + req.params.carid + "_" + req.params.carside + ".html");
+// });
+
+app.get("/driver", (req, res) => {
+    // Si no quedan retorna objeto bacio
+    if (driverDataLength <= 0 || isRunnig) {
+        res.json({});
+        return;
+    }
+
+    // Si solo queda uno lo retorna de forma directa
+    if (driverDataLength <= 1) {
+        driverDataLength--;
+        res.json(driverData[0]);
+        return;
+    }
+
+    // Si quedan varios espacios toma uno al azar
+    let index = Math.floor(Math.random() * (driverDataLength));
+    let objectTmp = driverData[index];
+    driverData[index] = driverData[driverDataLength - 1];
+    driverData[driverDataLength - 1] = objectTmp;
+    driverDataLength--;
+    res.json(objectTmp);
+    return;
+});
+
+app.get("/test", (req, res) => {
+    res.sendFile(__dirname + "/pages/client_test.html");
 });

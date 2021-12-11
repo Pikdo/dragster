@@ -16,6 +16,15 @@
     Stop
     <div ontouchstart="stopCommand()" onmousedown="stopCommand()" style="background-color: rgb(221, 36, 30); height: 100px; width: 100px;">
     </div>
+
+    Winner
+    <div ontouchstart="w1Command()" onmousedown="w1Command()" style="background-color: rgb(221, 148, 30); height: 100px; width: 100px;">
+        Winner 1
+    </div>
+
+    <div ontouchstart="w2Command()" onmousedown="w2Command()" style="background-color: rgb(30, 129, 221); height: 100px; width: 100px;">
+        Winner 2
+    </div>
     <div></div>
     Received message
     <!-- <div style="background-color: rgb(221, 36, 30); height: 100px; width: 100px;"> -->
@@ -24,15 +33,14 @@
     </div>
 </body>
 <script>
-    //const serverName = 'ws://192.168.1.69';
-    const serverName = 'wss://remotecarcontrol.herokuapp.com';
-    const ws = new WebSocket(serverName + '/racecontroller');
+    const WsServer = (location.protocol == 'http:' ? 'ws://' : 'wss://') + location.hostname;
+    const ws = new WebSocket(WsServer + '/racecontroller');
 
     const divMessage = document.getElementById('ShowReceivedMessage');
 
     ws.onopen = function() {
         //console.log(ws);
-        ws.pingInterval = setInterval(ws.send('{P}'), 4500);
+        ws.pingInterval = setInterval(ws.send('{P}'), 2000);
     };
 
     ws.onclose = function() {
@@ -54,6 +62,14 @@
 
     function stopCommand() {
         ws.send('{stopRace}');
+    }
+
+    function w1Command() {
+        ws.send('{winner:1}');
+    }
+
+    function w2Command() {
+        ws.send('{winner:2}');
     }
 </script>
 
