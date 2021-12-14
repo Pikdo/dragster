@@ -1,17 +1,24 @@
+import getEmoji from "./getEmoji";
+
 const setControles = async (DriverData) => {
     //const WsServer = (location.protocol == "http:" ? "ws://" : "wss://") + location.hostname;
 
     const hosturl = "https://remotecarcontrol.herokuapp.com";
     const WsServer = "ws://remotecarcontrol.herokuapp.com";
     const ws = new WebSocket(WsServer + DriverData.uri);
-
+    var equipoCompleto = false;
     ws.onopen = function () {
         console.log("WebSocket Client conectado: ", DriverData.uri);
+
+        document.getElementById("j1").innerHTML = DriverData.driverName + " " + getEmoji();
+        document.getElementById("car").innerHTML = "🚘📡" + " CARRO " + DriverData.car;
 
         ws.pingInterval = setInterval(() => {
             console.log("Mantener vivo WebSocket");
             ws.send("{P}");
-            cargarCompanero(DriverData.car);
+            if (!equipoCompleto) {
+                cargarCompanero(DriverData);
+            }
         }, 2000);
     };
 
@@ -19,15 +26,17 @@ const setControles = async (DriverData) => {
         clearInterval(ws.pingInterval);
         console.log("WebSocket Client close");
         document.getElementById("estado").innerHTML = "Carrera finalizada";
+
+        setTimeout(() => {
+            confetti({ particleCount: 500, spread: 150 });
+            location.hash = "#/registro";
+        }, 10000);
     };
 
     ws.onmessage = function (e) {
         if (e.data === '{"winner":"1"}' || e.data === '{"winner":"2"}') {
             mostrarGanador(e.data);
             return;
-        }
-
-        if (e.data === "La carrera comienza en.... 3") {
         }
 
         document.getElementById("estado").innerHTML = e.data;
@@ -45,9 +54,9 @@ const setControles = async (DriverData) => {
         }
     }
 
-    async function cargarCompanero(car) {
-        let url = hosturl + "/driverNames/" + car;
-        console.log(url);
+    async function cargarCompanero(driver) {
+        let url = hosturl + "/driverNames/" + driver.car;
+
         const response = await fetch(url, {
             headers: {
                 Accept: "application/json",
@@ -60,16 +69,23 @@ const setControles = async (DriverData) => {
 
         const equipo = await response.json();
 
-        var compañero = "🙂";
-
-        if (DriverData.motor === "A") {
-            compañero += " ↔ " + equipo["D"];
-        } else if (DriverData.motor === "D") {
-            compañero += " ↕ " + equipo["A"];
+        if (equipo["A"] != "" && equipo["D"] != "") {
+            equipoCompleto = true;
         }
 
-        document.getElementById("j2").innerHTML = compañero;
-        console.log("Equipo", equipo);
+        var jugador1 = "";
+        var jugador2 = "";
+
+        if (driver.motor === "A") {
+            jugador1 = " ↕ " + equipo["A"] + getEmoji();
+            jugador2 = getEmoji() + " ↔ " + equipo["D"];
+        } else if (driver.motor === "D") {
+            jugador1 += " ↔ " + equipo["D"] + getEmoji();
+            jugador2 += getEmoji() + equipo["A"] + " ↕ ";
+        }
+
+        document.getElementById("j1").innerHTML = jugador1;
+        document.getElementById("j2").innerHTML = jugador2;
     }
 
     function cargarEventosBotones() {
@@ -182,11 +198,8 @@ const setControles = async (DriverData) => {
         } else {
             text_equipo.innerHTML = `<p> 😅 GRACIAS POR PARTICIPAR 🥈</p>`;
         }
-
         setTimeout(() => {
-            confetti({ particleCount: 500, spread: 150 });
             clearInterval(confetiSetInterval);
-            location.hash = "#/registro";
         }, 10000);
     }
 

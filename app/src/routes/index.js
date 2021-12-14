@@ -51,7 +51,7 @@ const router = async () => {
                 break;
             }
             driver = await getDriver(globalParam.nombre);
-            content.innerHTML = Controles(driver);
+            content.innerHTML = Controles();
             setControles(driver);
             break;
         case "/admin":

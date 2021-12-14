@@ -4,7 +4,6 @@ const wsDriverAPI = "http://remotecarcontrol.herokuapp.com/driver";
 
 const getDriver = async (jugador) => {
     try {
-        i;
         const response = await fetch(wsDriverAPI, {
             headers: {
                 Accept: "application/json",
@@ -17,14 +16,8 @@ const getDriver = async (jugador) => {
         });
 
         const driver = await response.json();
-        console.log(driver);
 
-        console.log(Object.keys(driver).length);
-
-        if (Object.keys(driver).length != 0) {
-            driver["nombre"] = (driver.motor === "A" ? "↕ " : "↔ ") + driver.driverName;
-            driver["emoji"] = getEmoji();
-        } else {
+        if (Object.keys(driver).length === 0) {
             alert(`😅 Ya hay 4 jugadores registrados, espere a la siguiente carrera`);
             location.hash = "#/registro";
             return;
@@ -35,11 +28,5 @@ const getDriver = async (jugador) => {
         console.error("Error al obtener driver: " + error);
     }
 };
-
-function getEmoji() {
-    const emojis = ["😏", "😎", "😍", "🤖", "😺", "🤠", "🤑", "😁", "😊", "👽", "🥰", "🤩", "🤗", "😛"];
-    let numero = Math.round(Math.random() * (emojis.length - 1));
-    return emojis[numero];
-}
 
 export default getDriver;

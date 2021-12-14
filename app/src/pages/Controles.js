@@ -2,8 +2,8 @@ const Constroles = (driver) => {
     const view = `
         <div id="controles" class="form">
             <div class="form_titulos">
-                <div class="form__titulos_left">
-                    <h2 class="form__titulo">🚘📡 CARRO ${driver.car}</h2>
+                <div class="form__titulos_left">                    
+                    <h2 class="form__titulo" id="car"></h2>
                 </div>
                 <div class="form__titulos_right">
                     <h2 class="form__titulo estado" id="estado">Por iniciar...</h2>
@@ -23,13 +23,13 @@ const Constroles = (driver) => {
             </div>
             <div class="jugadores_container">
                 <div class="jugador_up_down">
-                    <p id="j1" class="nombre_jugador_1">${driver.emoji} ${driver.nombre}</p>
+                    <p id="j1" class="nombre_jugador_1"></p>
                 </div>
                 <div class="jugador_left_right">
                     <p id="j2" class="nombre_jugador_2"></p>
                 </div>
             </div>
-            <hr />
+            <div class="separador"></div>
             <div id="text_equipo" class="mensaje">EQUIPO</div>
         </div>
     `;

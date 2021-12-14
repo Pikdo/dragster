@@ -1,3 +1,5 @@
+import getEmoji from "./getEmoji";
+
 const setControlAdmin = () => {
     //const WsServer = (location.protocol == "http:" ? "ws://" : "wss://") + location.hostname;
     //const ws = new WebSocket(WsServer + "/racecontroller");
@@ -27,6 +29,10 @@ const setControlAdmin = () => {
     };
 
     ws.onmessage = function (e) {
+        if (e.data === '{"winner":"1"}' || e.data === '{"winner":"2"}') {
+            return;
+        }
+
         document.getElementById("estado").innerHTML = e.data;
     };
 
@@ -139,8 +145,8 @@ const setControlAdmin = () => {
 
         document.getElementById("1A").innerHTML = equipo1["A"] ? " ↕ " + equipo1["A"] + getEmoji() : "Sin 1A";
         document.getElementById("1D").innerHTML = equipo1["D"] ? " ↔ " + equipo1["D"] + getEmoji() : "Sin 1D";
-        document.getElementById("2A").innerHTML = equipo2["A"] ? " ↕ " + equipo2["A"] + getEmoji() : "Sin 2A";
-        document.getElementById("2D").innerHTML = equipo2["D"] ? " ↔ " + equipo2["D"] + getEmoji() : "Sin 2D";
+        document.getElementById("2A").innerHTML = equipo2["A"] ? getEmoji() + equipo2["A"] + " ↕ " : "Sin 2A";
+        document.getElementById("2D").innerHTML = equipo2["D"] ? getEmoji() + equipo2["D"] + " ↔ " : "Sin 2D";
     }
 
     function getEmoji() {
@@ -150,7 +156,7 @@ const setControlAdmin = () => {
     }
 
     function mostrarGanador(ganador) {
-        document.getElementById("estado").innerHTML = `Ganador equipo:` + ganador;
+        document.getElementById("estado").innerHTML = "Ganador equipo:" + ganador;
 
         confetti({ particleCount: 500, spread: 50 });
     }
