@@ -23,10 +23,10 @@ const Constroles = (driver) => {
             </div>
             <div class="jugadores_container">
                 <div class="jugador_up_down">
-                    <p class="nombre_jugador_1">${driver.emoji} ${driver.nombre}</p>
+                    <p id="j1" class="nombre_jugador_1">${driver.emoji} ${driver.nombre}</p>
                 </div>
                 <div class="jugador_left_right">
-                    <p class="nombre_jugador_2"></p>
+                    <p id="j2" class="nombre_jugador_2"></p>
                 </div>
             </div>
             <hr />

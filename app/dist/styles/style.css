@@ -213,9 +213,9 @@ main {
 
 .arrow {
     font-size: 4.5rem;
-    border-radius: 80px;
-    width: 80px;
-    height: 80px;
+    border-radius: 90px;
+    width: 90px;
+    height: 90px;
     border: 0px;
     color: var(--white);
     background-color: var(--primary-blue);
@@ -244,8 +244,7 @@ main {
 }
 
 .mensaje {
-    font-size: 1.8rem;
-    /*font-weight: bold;*/
+    font-size: 2rem;
     padding-top: 20px;
 }
 

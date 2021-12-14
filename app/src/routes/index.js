@@ -25,6 +25,7 @@ let globalParam = {
 
 const header = document.getElementById("header");
 const content = document.getElementById("content");
+let driver = {};
 
 const router = async () => {
     header.innerHTML = Header();
@@ -49,7 +50,7 @@ const router = async () => {
                 location.hash = "#/registro";
                 break;
             }
-            const driver = await getDriver(globalParam.nombre);
+            driver = await getDriver(globalParam.nombre);
             content.innerHTML = Controles(driver);
             setControles(driver);
             break;
@@ -71,14 +72,6 @@ function setRegistro() {
         btn_registrar.addEventListener("click", function () {
             console.log(txt_name_player.value);
             registrarJugador(txt_name_player.value);
-        });
-
-        btn_registrar.addEventListener("keypress", function (event) {
-            console.log(event);
-            if (event.code === 13) {
-                event.preventDefault();
-                registrarJugador(txt_name_player.value);
-            }
         });
     }
 }

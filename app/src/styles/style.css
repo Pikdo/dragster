@@ -205,11 +205,6 @@ main {
     align-self: center;
     justify-content: center;
 }
-/*Css para deshabilitar una parte de los controles*/
-.controles_disabled {
-    opacity: 30%;
-    pointer-events: none;
-}
 
 .arrow {
     font-size: 4.5rem;
@@ -230,6 +225,7 @@ main {
 
 .jugadores_container p {
     font-size: 1.8rem;
+    padding-top: 20px;
     padding-bottom: 15px;
 }
 
@@ -263,4 +259,8 @@ main {
 .versus {
     width: 10%;
     padding: 30px 10px 0 10px;
+}
+
+#btn_iniciar {
+    background-color: var(--green);
 }
