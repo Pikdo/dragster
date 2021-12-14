@@ -1,9 +1,8 @@
 const Registro = () => {
     const view = `
-    <div class="form">
-        <form action="post">
-            <h2 class="form__titulo">REGISTRO</h2>
-            <div class="separador"></div>
+    <div class="form">        
+        <h2 class="form__titulo">REGISTRO</h2>
+        <div class="separador"></div>        
             <input
                 type="text"
                 name="txt_name_player"
@@ -18,8 +17,8 @@ const Registro = () => {
                 name="btn_registrar"
                 class="form_input form_button"
                 value="INGRESAR"
-            />
-        </form>
+            />        
+        <div id="titulo" class="mensaje"></div>
     </div>
     `;
     return view;
