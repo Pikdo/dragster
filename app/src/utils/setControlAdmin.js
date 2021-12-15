@@ -1,13 +1,12 @@
 import getEmoji from "./getEmoji";
 
 const setControlAdmin = () => {
-    //const WsServer = (location.protocol == "http:" ? "ws://" : "wss://") + location.hostname;
-    //const ws = new WebSocket(WsServer + "/racecontroller");
     const hosturl = "https://remotecarcontrol.herokuapp.com";
-    const WsServer = "ws://remotecarcontrol.herokuapp.com";
+
+    const WsServer = (location.protocol == "http:" ? "ws://" : "wss://") + "remotecarcontrol.herokuapp.com";
+
     const ws = new WebSocket(WsServer + "/racecontroller");
 
-    var divMessage = document.getElementById("estado");
     var btn_iniciar_detener = document.getElementById("btn_iniciar_detener");
     var btn_reiniciar = document.getElementById("btn_reiniciar");
     var iniciado = false;
@@ -19,8 +18,6 @@ const setControlAdmin = () => {
             if (!iniciado && !equiposCompletos) {
                 cargarJugadores();
             }
-            console.log("iniciado: ", iniciado);
-            console.log("equiposcompletos: ", equiposCompletos);
         }, 2000);
     };
 
@@ -84,14 +81,12 @@ const setControlAdmin = () => {
 
     function iniciarDetener() {
         if (iniciado == false) {
-            console.log("Iniciar la carrera");
             startCommand();
             iniciado = true;
         }
     }
 
     function reiniciar() {
-        console.log("Terminar la carrera");
         stopCommand();
         limpiar();
     }
@@ -135,9 +130,6 @@ const setControlAdmin = () => {
         let equipo1 = await response1.json();
         let equipo2 = await response2.json();
 
-        console.log("Equipo 1", equipo1);
-        console.log("Equipo 2", equipo2);
-
         if (equipo1["A"] && equipo1["D"] && equipo2["A"] && equipo2["D"]) {
             equiposCompletos = true;
             estado.innerHTML = "Equipos completos";
@@ -147,12 +139,6 @@ const setControlAdmin = () => {
         document.getElementById("1D").innerHTML = equipo1["D"] ? " ↔ " + equipo1["D"] + getEmoji() : "Sin 1D";
         document.getElementById("2A").innerHTML = equipo2["A"] ? getEmoji() + equipo2["A"] + " ↕ " : "Sin 2A";
         document.getElementById("2D").innerHTML = equipo2["D"] ? getEmoji() + equipo2["D"] + " ↔ " : "Sin 2D";
-    }
-
-    function getEmoji() {
-        const emojis = ["😏", "😎", "😍", "🤖", "😺", "🤠", "🤑", "😁", "😊", "👽", "🥰", "🤩", "🤗", "😛"];
-        let numero = Math.round(Math.random() * (emojis.length - 1));
-        return emojis[numero];
     }
 
     function mostrarGanador(ganador) {

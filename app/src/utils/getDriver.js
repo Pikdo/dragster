@@ -1,6 +1,4 @@
-const wsDriverAPI = "http://remotecarcontrol.herokuapp.com/driver";
-
-// driverNames/1 o 2  carros
+const wsDriverAPI = "https://remotecarcontrol.herokuapp.com/driver";
 
 const getDriver = async (jugador) => {
     try {

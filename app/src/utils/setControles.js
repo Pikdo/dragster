@@ -1,20 +1,18 @@
 import getEmoji from "./getEmoji";
 
 const setControles = async (DriverData) => {
-    //const WsServer = (location.protocol == "http:" ? "ws://" : "wss://") + location.hostname;
-
     const hosturl = "https://remotecarcontrol.herokuapp.com";
-    const WsServer = "ws://remotecarcontrol.herokuapp.com";
+
+    const WsServer = (location.protocol == "http:" ? "ws://" : "wss://") + "remotecarcontrol.herokuapp.com";
+
     const ws = new WebSocket(WsServer + DriverData.uri);
+
     var equipoCompleto = false;
     ws.onopen = function () {
-        console.log("WebSocket Client conectado: ", DriverData.uri);
-
         document.getElementById("j1").innerHTML = DriverData.driverName + " " + getEmoji();
         document.getElementById("car").innerHTML = "🚘📡" + " CARRO " + DriverData.car;
 
         ws.pingInterval = setInterval(() => {
-            console.log("Mantener vivo WebSocket");
             ws.send("{P}");
             if (!equipoCompleto) {
                 cargarCompanero(DriverData);
@@ -24,7 +22,6 @@ const setControles = async (DriverData) => {
 
     ws.onclose = function (e) {
         clearInterval(ws.pingInterval);
-        console.log("WebSocket Client close");
         document.getElementById("estado").innerHTML = "Carrera finalizada";
 
         setTimeout(() => {

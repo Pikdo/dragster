@@ -23,7 +23,7 @@
 html {
     font-size: 62.5%; /* para usar medidas rem*/
     font-family: "Roboto", sans-serif;
-    scroll-behavior: smooth; /*Para crear una smooth scrolling*/
+    scroll-behavior: smooth;
 }
 
 body {

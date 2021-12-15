@@ -18,14 +18,12 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 html {
     font-size: 62.5%; /* para usar medidas rem*/
     font-family: "Roboto", sans-serif;
-    scroll-behavior: smooth; /*Para crear una smooth scrolling*/
+    scroll-behavior: smooth;
 }
 
 body {
@@ -39,6 +37,8 @@ header {
     width: 100%;
     min-width: 320px;
     height: 70px;
+    user-select: none;
+    -webkit-user-select: none;
 }
 .header-title {
     height: 70px;

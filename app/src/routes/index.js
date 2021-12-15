@@ -9,9 +9,6 @@ import getDriver from "../utils/getDriver";
 import setControles from "../utils/setControles";
 import setControlAdmin from "../utils/setControlAdmin";
 
-//const wsDriver = "http://remotecarcontrol.herokuapp.com/driver";
-const wsAdmin = "http://remotecarcontrol.herokuapp.com/racecontroller";
-
 const routes = {
     "/": Registro,
     "/registro": Registro,
@@ -20,7 +17,6 @@ const routes = {
 };
 let globalParam = {
     nombre: "",
-    control: "",
 };
 
 const header = document.getElementById("header");
@@ -32,8 +28,6 @@ const router = async () => {
 
     let hash = getHash();
     let route = await resolveRoutes(hash);
-
-    //let render = routes[route] ? routes[route] : Error404;
 
     // Carga las vistas
     switch (route) {
@@ -70,7 +64,6 @@ function setRegistro() {
 
     if (btn_registrar) {
         btn_registrar.addEventListener("click", function () {
-            console.log(txt_name_player.value);
             registrarJugador(txt_name_player.value);
         });
     }

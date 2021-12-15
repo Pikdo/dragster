@@ -12,3 +12,16 @@
     animation: none;
     -webkit-animation: none;
 }
+
+.form {
+    position: relative;
+    width: 320px;
+    margin: auto;
+    top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    padding: 10px;
+    background-color: var(--white);
+    border: 1px solid var(--primary-blue);
+    border-radius: 3px;
+}
