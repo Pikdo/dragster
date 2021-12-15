@@ -1,0 +1,27 @@
+.main-container {
+    width: 100%;
+    min-width: 320px;
+
+    height: 100%;
+    min-height: 85vh;
+    max-height: 925px;
+
+    background: no-repeat center/cover fixed url(../img/home.webp);
+    text-align: center;
+
+    animation: none;
+    -webkit-animation: none;
+}
+
+.form {
+    position: relative;
+    width: 320px;
+    margin: auto;
+    top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    padding: 10px;
+    background-color: var(--white);
+    border: 1px solid var(--primary-blue);
+    border-radius: 3px;
+}

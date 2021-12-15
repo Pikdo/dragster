@@ -1,7 +1,9 @@
 const ws = require('ws');
 const path = require('path');
 const express = require('express');
+var cors = require('cors')
 const parse = require('url').parse;
+var bodyParser = require('body-parser');
 const app = express();
 
 const serverPort = process.env.PORT || 3000;
@@ -15,6 +17,7 @@ const wssRaceController = new ws.Server({ noServer: true });
 
 let carsList = {};
 let driversList = {};
+let driversNames = {};
 let raceController = {};
 //const raceStatus = {isRunning: false};
 let isRunnig = false;
@@ -23,7 +26,7 @@ const racerTimedCommandsList = ["{GTF:}", "{GTB:}", "{ATF:}", "{ATB:}", "{DTF:}"
 //other commands {GPD}, {GTF:10}, {GTB:10}
 const adminCommandsList = ["{startRace}", "{stopRace}", "{winner:1}", "{winner:2}"];
 const commandTimeFactor = maxCarCommandTime / maxCommandTime; // relascion para el tiempo de los commando 
-let driverData = [{ uri: "/driver/1/a", car: "1", Motor: "A" }, { uri: "/driver/1/d", car: "1", Motor: "D" }, { uri: "/driver/2/a", car: "2", Motor: "A" }, { uri: "/driver/2/d", car: "2", Motor: "D" }];
+let driverData = [{ uri: "/driver/1/a", car: "1", motor: "A" }, { uri: "/driver/1/d", car: "1", motor: "D" }, { uri: "/driver/2/a", car: "2", motor: "A" }, { uri: "/driver/2/d", car: "2", motor: "D" }];
 let driverDataLength = driverData.length;
 
 let driverCommandControl = {};
@@ -193,13 +196,13 @@ const raceStop = (winner) => {
 
     isRunnig = false
     broadcastCarMessage('{GPD}');
-    console.log('winner: ', winner);
     //broadcastDriversMessage("La carrera ha terminado....");
     if (winner) {
-        broadcastDriversMessage("{winner:\"" + winner + "\"}");
+        broadcastDriversMessage("{\"winner\":\"" + winner + "\"}");
     }
     killDrivers();
     driverDataLength = driverData.length;
+    driversNames = {};
 
     // Detiene turbos en uso
     // for (var driverID in driverCommandControl) {
@@ -220,15 +223,17 @@ const broadcastDriversMessage = (message) => {
 
 const broadcastCarMessage = (message) => {
     for (var carID in carsList) {
-        console.log('mensahe:', carID);
+        //console.log('mensaje:', carID);
         carsList[carID].send(message);
     }
 }
 
 const killDrivers = () => {
     for (var driverID in driversList) {
-        driversList[driverID].close();
-        driversList[driverID] = {};
+        if (driversList[driverID] && driversList[driverID].close) {
+            driversList[driverID].close();
+            driversList[driverID] = {};
+        }
     }
 }
 
@@ -320,6 +325,58 @@ const getAdjustedCommandTime = (command) => {
     }
 }
 
+const processDriver = (index, driverName) => {
+    //Rechaza nombres en blanco
+    if (!driverName || driverName == "") {
+        return {}
+    }
+
+    let objectTmp = driverData[index];
+
+    if (driverDataLength > 0) {
+        driverData[index] = driverData[driverDataLength - 1];
+        driverData[driverDataLength - 1] = objectTmp;
+    }
+
+    driverDataLength--;
+
+    if (driverName) {
+        objectTmp.driverName = driverName;
+    } else {
+        objectTmp.driverName = "Jugador_" + objectTmp.car + objectTmp.motor;
+    }
+    driversNames[objectTmp.car + objectTmp.motor] = objectTmp.driverName;
+    return objectTmp;
+}
+
+
+const validateDriverName = (driverName) => {
+    //Rechaza nombres en blanco
+    if (!driverName || driverName == "") {
+        return {}
+    }
+
+    //console.log("driverName: ", driverName);
+    //console.log("driversNames: ", driversNames);
+    // Si el nombre ya existe, retorna los mismos datos
+    switch (driverName) {
+        case driversNames["1A"]:
+            return { uri: "/driver/1/a", car: "1", motor: "A", "driverName": driverName }
+            break;
+        case driversNames["1D"]:
+            return { uri: "/driver/1/d", car: "1", motor: "D", "driverName": driverName }
+            break;
+        case driversNames["2A"]:
+            return { uri: "/driver/2/a", car: "2", motor: "A", "driverName": driverName }
+            break;
+        case driversNames["2D"]:
+            return { uri: "/driver/2/d", car: "2", motor: "D", "driverName": driverName }
+            break;
+            //default:
+    }
+    return {};
+}
+
 // const authenticate = (request, callback) => {
 //     const { pathname } = parse(request.url);
 //     const pathnameSegments = pathname.split("/");
@@ -360,19 +417,34 @@ const getAdjustedCommandTime = (command) => {
 //     callback(undefined, request);
 // };
 
+app.use(cors())
+app.use(bodyParser.json()); // body en formato json
+app.use(bodyParser.urlencoded({ extended: false })); //body formulario
+app.use('/img', express.static(path.join(__dirname, 'app/img')));
+app.use('/styles', express.static(path.join(__dirname, 'app/styles')));
+app.use('/', express.static(path.join(__dirname, 'app')));
 
-app.use('/img', express.static(path.join(__dirname, 'public/images')));
-app.use('/', express.static(path.join(__dirname, 'public')));
-
-app.get("/admin", (req, res) => {
-    res.sendFile(__dirname + "/pages/client_race_controller.html");
+app.get("/driverNames/:carid", (req, res) => {
+    let respNames = {};
+    respNames["A"] = driversNames[req.params.carid + "A"] || "";
+    respNames["D"] = driversNames[req.params.carid + "D"] || "";
+    res.json(respNames);
 });
 
-// app.get("/:carid/:carside", (req, res) => {
-//     res.sendFile(__dirname + "/pages/client_" + req.params.carid + "_" + req.params.carside + ".html");
-// });
+app.post("/driver", (req, res) => {
+    //Rechaza nombres en blanco
+    let driverName = req.body.name
+        //console.log("driverName:", driverName);
+    if (!driverName || driverName == "") {
+        return {}
+    }
 
-app.get("/driver", (req, res) => {
+    let resVal = validateDriverName(driverName);
+    if (resVal && resVal.driverName) {
+        res.json(resVal);
+        return;
+    }
+
     // Si no quedan retorna objeto bacio
     if (driverDataLength <= 0 || isRunnig) {
         res.json({});
@@ -381,21 +453,30 @@ app.get("/driver", (req, res) => {
 
     // Si solo queda uno lo retorna de forma directa
     if (driverDataLength <= 1) {
-        driverDataLength--;
-        res.json(driverData[0]);
+        res.json(processDriver(0, driverName));
         return;
     }
 
     // Si quedan varios espacios toma uno al azar
     let index = Math.floor(Math.random() * (driverDataLength));
-    let objectTmp = driverData[index];
-    driverData[index] = driverData[driverDataLength - 1];
-    driverData[driverDataLength - 1] = objectTmp;
-    driverDataLength--;
-    res.json(objectTmp);
+    res.json(processDriver(index, driverName));
     return;
 });
 
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/app/index.html");
+});
+
+
+///   test routes 
 app.get("/test", (req, res) => {
     res.sendFile(__dirname + "/pages/client_test.html");
 });
+
+app.get("/admin", (req, res) => {
+    res.sendFile(__dirname + "/pages/client_race_controller.html");
+});
+
+// app.get("/:carid/:carside", (req, res) => {
+//     res.sendFile(__dirname + "/pages/client_" + req.params.carid + "_" + req.params.carside + ".html");
+// });
