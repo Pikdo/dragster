@@ -8,4 +8,8 @@ WORKDIR /home/node/app
 RUN npm install
 
 # EXPOSE 80
-CMD node wsserver.js
+#Shell form
+CMD node wsserver.js 
+
+#Exec form
+# CMD ["node wsserver.js"]
