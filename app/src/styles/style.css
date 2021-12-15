@@ -18,8 +18,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 html {
@@ -39,6 +37,8 @@ header {
     width: 100%;
     min-width: 320px;
     height: 70px;
+    user-select: none;
+    -webkit-user-select: none;
 }
 .header-title {
     height: 70px;

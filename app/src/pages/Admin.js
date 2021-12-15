@@ -36,8 +36,7 @@ const Admin = () => {
                             </div>
                         </div>
                         <form action="post">
-                            <div class="separador"></div>
-                            
+                            <div class="separador"></div>                            
                             <input
                                 type="button"
                                 id="btn_iniciar_detener"
