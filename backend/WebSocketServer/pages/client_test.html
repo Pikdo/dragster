@@ -40,7 +40,35 @@
 <script>
     var getJSON = function(url, callback) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
+        xhr.open("POST", url);
+
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.responseType = 'json';
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                //console.log(xhr.status);
+                //console.log(xhr.response);
+                if (xhr.response && xhr.response != "{}") {
+                    callback(null, xhr.response);
+                } else {
+                    callback(xhr.status, xhr.response);
+                }
+            }
+        };
+
+        var data = '{"name":"NombreJugador"}';
+
+        xhr.send(data);
+
+        /////////////////////////////////////////////////////
+        /*var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            name: "NombreJugador"
+        }));
         xhr.responseType = 'json';
         xhr.onload = function() {
             var status = xhr.status;
@@ -50,7 +78,7 @@
                 callback(status, xhr.response);
             }
         };
-        xhr.send();
+        xhr.send();*/
     };
 
     var wsConnection = function(DriverData) {

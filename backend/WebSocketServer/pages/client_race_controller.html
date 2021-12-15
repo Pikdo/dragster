@@ -40,7 +40,9 @@
 
     ws.onopen = function() {
         //console.log(ws);
-        ws.pingInterval = setInterval(ws.send('{P}'), 2000);
+        ws.pingInterval = setInterval(() => {
+            ws.send('{P}')
+        }, 2000);
     };
 
     ws.onclose = function() {
