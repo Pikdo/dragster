@@ -65,12 +65,21 @@ wssCars.on('connection', socket => {
 });
 
 wssDrivers.on('connection', socket => {
+    // Si existe una conexión del mismo jugador, la cierra
+    if (driversList[socket.driverID] && driversList[socket.driverID].close) {
+        driversList[socket.driverID].close();
+    }
+
     driversList[socket.driverID] = socket;
     if (!driverCommandControl[socket.driverID]) {
         // Solamente lo inicializa cuando es la primera vez, cuando se reconecta no
         driverCommandControl[socket.driverID] = { GUD: false };
     }
     console.log('[' + socket.driverID + '] Driver conection');
+
+    if (isRunnig) { // Si está corriendo manda mensaje
+        socket.send("...GO...");
+    }
 
     socket.on('message', function(message) {
         if (isRunnig) { // solo revisa el mensaje cuando están corriendo los carros
@@ -176,11 +185,11 @@ const raceStart = () => {
         driverCommandControl[driverID].GUD = false;
     }
 
-    broadcastDriversMessage("La carrera comienza en.... 3");
+    broadcastDriversMessage("Inicia en: 3");
     const timeoutObj = setTimeout(() => {
-        broadcastDriversMessage("La carrera comienza en.... 2");
+        broadcastDriversMessage("Inicia en: 2");
         const timeoutObj = setTimeout(() => {
-            broadcastDriversMessage("La carrera comienza en.... 1");
+            broadcastDriversMessage("Inicia en: 1");
             const timeoutObj = setTimeout(() => {
                 broadcastDriversMessage("...GO...");
                 isRunnig = true

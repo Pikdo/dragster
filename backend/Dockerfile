@@ -9,7 +9,8 @@ RUN npm install
 
 # EXPOSE 80
 #Shell form
-CMD node wsserver.js 
+#CMD node wsserver.js 
 
 #Exec form
 # CMD ["node wsserver.js"]
+CMD ["wsserver.js"]
