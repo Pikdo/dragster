@@ -29,7 +29,7 @@ const Admin = () => {
                                 id="btn_gana_2"
                                 name="btn_gana_2"
                                 class="form_input form_button"
-                                value="🚕 CAR 2"                                
+                                value="🚕 CAR 2"
                                 /> 
                                 <p id="2A"></p>
                                 <p id="2D"></p>
